@@ -3,6 +3,7 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 public class DriveTrain extends Subsystems{
     int t1Port;
@@ -25,4 +26,26 @@ public class DriveTrain extends Subsystems{
         victor2 = new WPI_VictorSPX(v2Port);
         m_robot = new DifferentialDrive(); // Wait until the motor controllers have a position on the robot
     }
+
+    public void tankDrive(double speed1, double speed2){
+        talon1.set(speed1);
+        talon2.set(speed2);
+        victor1.set(speed1);
+        victor2.set(speed2); 
+    }
+
+    public void brake(){
+        talon1.setNeutralMode(NeutralMode.Brake);
+        talon2.setNeutralMode(NeutralMode.Brake);
+        victor1.setNeutralMode(NeutralMode.Brake);
+        victor1.setNeutralMode(NeutralMode.Brake);
+    }
+
+    public void coast(){
+        talon1.setNeutralMode(NeutralMode.Coast);
+        talon2.setNeutralMode(NeutralMode.Coast);
+        victor1.setNeutralMode(NeutralMode.Coast);
+        victor2.setNeutralMode(NeutralMode.Coast);
+    }
+
 }
