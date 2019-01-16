@@ -4,7 +4,7 @@
 package frc.robot;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
-public class Forklift{
+public class Forklift extends Subsystems{
     int sPort1;
     int sPort2;
     DoubleSolenoid pistonController;
