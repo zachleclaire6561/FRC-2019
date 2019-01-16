@@ -14,4 +14,8 @@ public class RollingIntake{
     public void move(){
         wheelController.set(1);
     }
+
+    public void stop(){
+        wheelController.set(0);
+    }
 }
