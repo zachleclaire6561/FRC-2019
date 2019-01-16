@@ -11,8 +11,12 @@ public class RollingIntake{
         wheelController = new Spark(sPort);
     }
     
-    public void move(){
+    public void forward(){
         wheelController.set(1);
+    }
+
+    public void reverse(){
+        wheelController.set(-1);
     }
 
     public void stop(){
