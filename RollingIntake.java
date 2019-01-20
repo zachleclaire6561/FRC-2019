@@ -1,6 +1,6 @@
 //This class has the functions for the rolling intake
 
-package frc.robot;
+package frc.robot.Subsystems;
 import edu.wpi.first.wpilibj.Spark;
 public class RollingIntake{
     int sPort;

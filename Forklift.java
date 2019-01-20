@@ -1,7 +1,7 @@
 //This subsystem will have the functions of the forklift on the robot
 //The forklift is begin used as the intake for the disc and the outtake for the ball
 
-package frc.robot;
+package frc.robot.Subsystems;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 public class Forklift extends Subsystems{
