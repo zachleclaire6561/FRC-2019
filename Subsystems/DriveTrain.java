@@ -3,7 +3,7 @@ package frc.robot.Subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.;
+//import com.ctre.phoenix.motorcontrol.can.;
 
 public class DriveTrain extends Subsystems{
     private int t1Port;
@@ -38,7 +38,7 @@ public class DriveTrain extends Subsystems{
     @Override
     public void stop(){
         brake();
-        //
+        
     }
     
     @Override
@@ -68,3 +68,13 @@ public class DriveTrain extends Subsystems{
     }
 
 }
+
+/*
+alignment of drive base: 
+1. check for vision tape
+2. 
+
+
+
+*/
+

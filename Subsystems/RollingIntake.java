@@ -2,7 +2,7 @@
 
 package frc.robot.Subsystems;
 import edu.wpi.first.wpilibj.Spark;
-public class RollingIntake{
+public class RollingIntake {
     int sPort;
     Spark wheelController;
 
