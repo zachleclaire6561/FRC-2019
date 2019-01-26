@@ -1,44 +1,36 @@
 package frc.robot.Subsystems;
 import edu.wpi.first.wpilibj.Spark;
+import com.ctre.phoenix.motorcontrol.can.*;
 
 public class Elevator extends Subsystems {
+    int tPort1, tPort2;
+    double encodedHeight;
+    double encodedVelocity;
+    TalonSRX talon1;
+    TalonSRX talon2;
 
-    int port1;
-    int port2; 
-    private WPI_TalonSRX talon1;
-    private WPI_TalonSRX talon2;
-
-    public Elevator(int port1, int port2) {
-        this.port1 = port1;
-        this.port2 = port2;
-        talon1 = new WPI_TalonSRX();
+    public Elevator(int tPort1, int tPort2) {
+        this.tPort1 = tPort1;
+        this.tPort2 = tPort2;
+        talon1 = new TalonSRX(tPort1);
+        talon2 = new TalonSRX(tPort2);
+        talon2.follow(talon1);
     }
-
     public void raise() {
-        elevatorController.set(1);
+        talon1.set(ControlMode.PercentOutput, 1);
     }
-
     public void lower() {
-        elevatorController.set(-1);
+        talon1.set(ControlMode.PercentOutput, -1);
     }
-
-    @Override
-    public void zeroSensors(){
-
+    public void stop() {
+        talon1.set(ControlMode.PercentOutput, 0);
     }
-
-    @Override 
-    public void stop(){
-
+    public getVelocity() {
+        encodedVelocity = talon1.getSelectedSensorVelocity(0);
+        return encodedVelocity;
     }
-
-    @Override
-    public void displaySmartDashBoard(){
-
-    }
-
-    @Override 
-    public void looper(){
-
+    public getPosition() {
+        encodedPosition = talon1.getSelectedSensorPosition(0);
+        return encodedPosition;
     }
 }
