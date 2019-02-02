@@ -1,34 +1,59 @@
 //  This is the class for the Drive Train. It will contain all of the functions the drive train will us
 package frc.robot.Subsystems;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.pheonix.motorcontrol.StatusFrameEnhanced;
+import com.kauailabs.navx.frc.AHRS;
 //import com.ctre.phoenix.motorcontrol.can.;
 
 public class DriveTrain extends Subsystems{
-    private int t1Port;
-    private int t2Port;
-    private int v1Port;
-    private int v2Port;
-    private WPI_TalonSRX talon1;
-    private WPI_TalonSRX talon2;
-    private WPI_VictorSPX victor1;
-    private WPI_VictorSPX victor2;
+    
+
+    private TalonSRX leftMaster;
+    private TalonSRX rightMaster;
+    private VictorSPX leftSlave;
+    private VictorSPX rightSlave;
+    private AHRS gyro;
+
 
     enum DriveState {
-
-     }
-
-    public DriveTrain(int t1Port, int t2Port, int v1Port, int v2Port){
-        this.t1Port = t1Port;
-        this.t2Port = t2Port;
-        this.v1Port = v1Port;
-        this.v2Port = v2Port;
-        talon1 = new WPI_TalonSRX(t1Port);
-        talon2 = new WPI_TalonSRX(t2Port); 
-        victor1 = new WPI_VictorSPX(v1Port);
-        victor2 = new WPI_VictorSPX(v2Port);
+        Loading,
+        Disk,
+        Aligning,
+        Drive,
+        Parked
     }
+
+    public void configureTalon(TalonSRX talon, boolean left){
+        talon.setStatusFrameEnhanced(StatusFrameEnhanced.Status_2_Feedback, 5, 100);
+        ErrorCode sensor = talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MafEncoder_Relative, 0, 100); 
+        if(sensor != ErrorCode.OK){
+            //Log this issue
+        }
+        talon.setInverted(!left);
+        talon.enableVoltageCompensation(true);
+        talon.configVoltageCompSaturation(12.0, Constants.MAX_CAN_TIMEOUT);
+        talon.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_50Ms, Constants.MAX_CAN_TIMEOUT);
+        talon.configVelocityMeasurementPeriod( 1 , Constants.MAX_CAN_TIMEOUT);
+        talon.configClosedloopRamp(Constants.DRIVE_VOLTAGE_RAMP_RATE, Constants.MAX_CAN_TIMEOUT);
+        talon.configNeutralDeadband(Constants.DRIVE_NEUTRAL_DEADBAND, 5);
+    }
+
+    public DriveTrain(){
+        talon1 = TalonSRXFactory.createDefaultTalon(Constants.LEFT_MASTER_ID);
+        talon1.configureTalon(talon1, true);
+
+        victorSlave1 = new WPI_VictorSPX(v1Port);
+        victorSlave1 = 
+        talon2 = TalonSRXFactory.createDefaultTalon(Constants.RIGHT_MASTER_ID); 
+        
+
+        
+        victorSlave2 = new WPI_VictorSPX(v2Port);
+    }
+
+    
 
     @Override
     public void zeroSensors(){
@@ -38,7 +63,6 @@ public class DriveTrain extends Subsystems{
     @Override
     public void stop(){
         brake();
-        
     }
     
     @Override

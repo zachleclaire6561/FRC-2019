@@ -1,7 +1,7 @@
 //This subsystem will have the functions of the forklift on the robot
 //The forklift is begin used as the intake for the disc and the outtake for the ball
 
-package frc.robot.Subsystems;
+package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 public class Forklift extends Subsystems{
@@ -9,14 +9,14 @@ public class Forklift extends Subsystems{
     int sPort2;
     DoubleSolenoid solenoid1;
 
-    public enum Forklift{
+    public enum forkLiftState{
 
     }
 
     public Forklift(int sPort1, int sPort2){
         this.sPort1 = sPort1;
         this.sPort2 = sPort2;
-        pistonController = new DoubleSolenoid(sPort1, sPort2);
+        solenoid1 = new DoubleSolenoid(sPort1, sPort2);
     }
 
     @Override 
@@ -35,15 +35,15 @@ public class Forklift extends Subsystems{
     }
 
     public void pistonOut(){
-        pistonController.set(DoubleSolenoid.Value.kForward);
+        solenoid1.set(DoubleSolenoid.Value.kForward);
     }
     
     public void reverse(){
-        pistonController.set(DoubleSolenoid.Value.kReverse);
+       solenoid1.set(DoubleSolenoid.Value.kReverse);
     }
 
     public void off(){
-        pistonController.set(DoubleSolenoid.Value.kOff);  
+        solenoid1.set(DoubleSolenoid.Value.kOff);  
     }
 
     @Override
