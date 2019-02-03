@@ -3,11 +3,7 @@ package frc.lib.drivers;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod;
-import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
-import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
-import com.ctre.phoenix.motorcontrol.ControlFrame;
 import com.ctre.phoenix.ParamEnum;
 
 
@@ -18,6 +14,8 @@ https://github.com/Team254/FRC-2018-Public/blob/master/src/main/java/com/team254
 */
 
 public class VictorSPXFactory{
+        public static int kTimeoutMs = 100;
+
 
     public static class Configuration {
         public NeutralMode NEUTRAL_MODE = NeutralMode.Coast;
@@ -50,7 +48,7 @@ public class VictorSPXFactory{
 
     private static final Configuration kDefaultConfiguration = new Configuration();
     private static final Configuration kSlaveConfiguration = new Configuration();
-    public static int kTimeoutMs = 0;
+  
 
     static {
         // This control frame value seems to need to be something reasonable to avoid the Talon's

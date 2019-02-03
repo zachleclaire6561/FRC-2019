@@ -31,8 +31,16 @@ public class Constants{
     //Subsystem calibrated constants
     public static final int ELEVATOR_TICKS_TO_DISTANCE = 0;
 
-    public static final int MAX_CAN_TIMEOUT = 10; // adjust
+    public static final int kLongCANTimeoutMs = 10; //adjust
     public static final double DRIVE_VOLTAGE_RAMP_RATE = 10;
 
+    /*
+    PID constants for elevator
+    */ 
+
+    public static final double kP = 0;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    
 
 }
