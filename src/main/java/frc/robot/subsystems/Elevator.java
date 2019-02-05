@@ -46,10 +46,10 @@ public class Elevator extends Subsystems {
     }
 
     public Elevator() {
-        talon1 = new TalonSRXFactory.createDefaultTalon(Constants.ELEVATOR_MTR_1);
+        talon1 = TalonSRXFactory.createDefaultTalon(Constants.ELEVATOR_MTR_1);
         configureMaster(talon1);
 
-        talon2 = new TalonSRXFactory.createPermanentSlaveTalon(Constants.ELEVATOR_MTR_2, Constants.ELEVATOR_MTR_1);
+        talon2 = TalonSRXFactory.createPermanentSlaveTalon(Constants.ELEVATOR_MTR_2, Constants.ELEVATOR_MTR_1);
     }
 
     @Override 
@@ -59,7 +59,7 @@ public class Elevator extends Subsystems {
 
     @Override 
     public void stop(){
-
+        
     }
 
     @Override 
