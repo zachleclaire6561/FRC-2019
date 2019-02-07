@@ -8,6 +8,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import frc.robot.subsystems.DriveTrain;
+import edu.wpi.first.wpilibj.Joystick;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -17,6 +19,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
  * project.
  */
 public class Robot extends TimedRobot {
+  
+  DriveTrain driveBase = new DriveTrain();
+  
   /**
    * This function is run when the robot is first started up and should be used
    * for any initialization code.
@@ -39,6 +44,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
+    driveBase.tankDrive(j1.getY(), j2.getY());
   }
 
   @Override

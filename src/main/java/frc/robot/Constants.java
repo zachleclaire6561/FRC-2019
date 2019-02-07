@@ -1,11 +1,12 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.SerialPort;
 public class Constants{
     
     //CAN ID's
     public static final int DRIVE_TRAIN_MTR_LEFT_FRONT  = 0;
-    public static final int DRIVE_TRAIN_MTR_RIGHT_FRONT = 1;
-    public static final int DRIVE_TRAIN_MTR_LEFT_BACK   = 2;
+    public static final int DRIVE_TRAIN_MTR_RIGHT_FRONT = 2;
+    public static final int DRIVE_TRAIN_MTR_LEFT_BACK   = 1;
     public static final int DRIVE_TRAIN_MTR_RIGHT_BACK  = 3;
     public static final int ELEVATOR_MTR_1              = 4; 
     public static final int ELEVATOR_MTR_2              = 5;
@@ -14,7 +15,7 @@ public class Constants{
     public static final int INTAKE_MTR_1  = 0;
 
     //MXP Ports
-    public static final int DRIVE_TRAIN_GYRO = 1;
+    public static final SerialPort.Port  DRIVE_TRAIN_GYRO = SerialPort.Port.kMXP;
 
     //DIO Ports
     public static final int LIMIT_SWITCH_1 = 0;

@@ -6,6 +6,7 @@ import frc.lib.drivers.VictorSPXFactory;
 import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.wpilibj.SerialPort;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
@@ -13,6 +14,7 @@ import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.ErrorCode;
+import com.kauailabs.navx.frc.AHRS;
 //import com.ctre.phoenix.motorcontrol.can.;
 
 public class DriveTrain extends Subsystems{
@@ -20,6 +22,8 @@ public class DriveTrain extends Subsystems{
     private TalonSRX talon2;
     private VictorSPX victor1;
     private VictorSPX victor2;
+    AHRS gyro = new AHRS(Constants.DRIVE_TRAIN_GYRO);
+
 
     enum DriveState {
         
@@ -42,16 +46,16 @@ public class DriveTrain extends Subsystems{
 }
 
     public DriveTrain(){
-        talon1  = new TalonSRXFactory.createDefaultTalon(Constants.DRIVE_TRAIN_MTR_LEFT_FRONT);
+        talon1  = TalonSRXFactory.createDefaultTalon(Constants.DRIVE_TRAIN_MTR_LEFT_FRONT);
         configureMaster(talon1, true);
 
-        victor1 = new VictorSPXFactory.createPermanentSlaveVictor(Constants.DRIVE_TRAIN_MTR_LEFT_BACK, Constants.DRIVE_TRAIN_MTR_LEFT_FRONT);
+        victor1 = VictorSPXFactory.createPermanentSlaveVictor(Constants.DRIVE_TRAIN_MTR_LEFT_BACK, Constants.DRIVE_TRAIN_MTR_LEFT_FRONT);
         victor1.setInverted(false);
 
-        talon2  = new TalonSRXFactory.createDefaultTalon(Constants.DRIVE_TRAIN_MTR_RIGHT_FRONT);
+        talon2  = TalonSRXFactory.createDefaultTalon(Constants.DRIVE_TRAIN_MTR_RIGHT_FRONT);
         configureMaster(talon1, false);
      
-        victor2 = new VictorSPXFactory.createPermanentSlaveVictor(Constants.DRIVE_TRAIN_MTR_RIGHT_BACK, Constants.DRIVE_TRAIN_MTR_RIGHT_FRONT);
+        victor2 = VictorSPXFactory.createPermanentSlaveVictor(Constants.DRIVE_TRAIN_MTR_RIGHT_BACK, Constants.DRIVE_TRAIN_MTR_RIGHT_FRONT);
         victor2.setInverted(true);
     }
 
