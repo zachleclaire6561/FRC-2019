@@ -16,6 +16,4 @@ public class Gyro{
        return gyro.getAngle();
     }
 
-
-
 }

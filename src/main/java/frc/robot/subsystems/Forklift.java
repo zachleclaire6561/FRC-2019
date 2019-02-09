@@ -2,21 +2,18 @@
 //The forklift is begin used as the intake for the disc and the outtake for the ball
 
 package frc.robot.subsystems;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Spark;
+import frc.robot.Constants;
 
 public class Forklift extends Subsystems{
-    int sPort1;
-    int sPort2;
-    DoubleSolenoid solenoid1;
-
+    
+    Spark spark1 = new Spark(Constants.);
     public enum forkLiftState{
 
     }
 
-    public Forklift(int sPort1, int sPort2){
-        this.sPort1 = sPort1;
-        this.sPort2 = sPort2;
-        solenoid1 = new DoubleSolenoid(sPort1, sPort2);
+    public Forklift(){
+        solenoid1 = new DoubleSolenoid(Constants.DOUBLE_SOLENOID_1, Constants.DOUBLE_SOLENOID_2);
     }
 
     @Override 
