@@ -8,6 +8,7 @@ public class Constants{
     public static final int DRIVE_TRAIN_MTR_RIGHT_BACK  = 3;
     public static final int ELEVATOR_MTR_1              = 4; 
     public static final int ELEVATOR_MTR_2              = 5;
+    public static final int PDP_Module                  = 1; 
 
     //PWM Ports
     public static final int INTAKE_MTR_1  = 0;
@@ -32,6 +33,7 @@ public class Constants{
 
     public static final int MAX_CAN_TIMEOUT = 10; // adjust
     public static final double DRIVE_VOLTAGE_RAMP_RATE = 10;
+    public static final double INTAKE_VOLTAGE_RAMP_RATE = 10;
 
 
 }

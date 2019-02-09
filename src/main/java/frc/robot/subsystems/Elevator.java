@@ -1,8 +1,8 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
-import frc.lib.drivers.*;
 import frc.lib.math.PID;
+import frc.lib.drivers.motorcontrollers.*;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -20,12 +20,12 @@ public class Elevator extends Subsystems {
     private TalonSRX talon2;
 
     private PID pidHeightController = new PID(Constants.kP, Constants.kI, Constants.kD);
-    private ElevatorState elvState = ElevatorState.INTAKE;
+    private ElevatorState elvState = ElevatorState.LOADINGDISK;
 
     public enum ElevatorState{
-        SCORING,  
-        INTAKE,
-        ZEROING, 
+        LOADINGDISK,
+        LOADINGCARGO,
+        ROCKET,
         BRAKE
     }
 
@@ -50,11 +50,14 @@ public class Elevator extends Subsystems {
         configureMaster(talon1);
 
         talon2 = TalonSRXFactory.createPermanentSlaveTalon(Constants.ELEVATOR_MTR_2, Constants.ELEVATOR_MTR_1);
+
+        
     }
 
     @Override 
     public void zeroSensors(){
         talon1.setSelectedSensorPosition(0, 0, 0);
+        pidHeightController.resetIntegrator();
     }
 
     @Override 
@@ -77,11 +80,17 @@ public class Elevator extends Subsystems {
         goalHeight = height;
     }
 
+    public void configurePID(){
+        pidHeightController.
+    }
+
     public void ResetHeight(){
         height = 0;
         talon1.setSelectedSensorPosition(0, 0, 0);
-        elvState = ElevatorState.INTAKE;
+        elvState = ElevatorState.;
     }
+
+    //Accessors
 
     public double getRawVelocity() {
         return talon1.getSelectedSensorVelocity(0);

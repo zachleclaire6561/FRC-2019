@@ -13,6 +13,7 @@ public class Constants{
 
     //PWM Ports
     public static final int INTAKE_MTR_1  = 0;
+    public static final int INTAKE_MTR_2  = 1;
 
     //MXP Ports
     public static final SerialPort.Port  DRIVE_TRAIN_GYRO = SerialPort.Port.kMXP;
@@ -34,6 +35,7 @@ public class Constants{
 
     public static final int kLongCANTimeoutMs = 10; //adjust
     public static final double DRIVE_VOLTAGE_RAMP_RATE = 10;
+    public static final double INTAKE_VOLTAGE_RAMP_RATE = 10;
 
     public static final int kLooperDt = 100;
 
