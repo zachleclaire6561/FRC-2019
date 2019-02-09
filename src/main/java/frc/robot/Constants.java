@@ -18,12 +18,12 @@ public class Constants{
     public static final SerialPort.Port  DRIVE_TRAIN_GYRO = SerialPort.Port.kMXP;
 
     //DIO Ports
-    public static final int LIMIT_SWITCH_1 = 0;
-    public static final int LIMIT_SWITCH_2 = 1;
+    public static final int LIMIT_SWITCH_1 = 0; 
+    public static final int LIMIT_SWITCH_2 = 1; 
 
     //Analog Ports
     public static final int ULTRASONIC_1 = 0; 
-    public static final int ULTRASONIC_2 = 1;
+    //public static final int ULTRASONIC_2 = 1; 
 
     // PCM Ports
     public static final int DOUBLE_SOLENOID_1 = 0;
@@ -34,6 +34,9 @@ public class Constants{
 
     public static final int kLongCANTimeoutMs = 10; //adjust
     public static final double DRIVE_VOLTAGE_RAMP_RATE = 10;
+
+    public static final int kLooperDt = 100;
+
 
     /*
     PID constants for elevator

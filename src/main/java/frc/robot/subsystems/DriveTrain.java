@@ -22,12 +22,13 @@ public class DriveTrain extends Subsystems{
     private TalonSRX talon2;
     private VictorSPX victor1;
     private VictorSPX victor2;
-    AHRS gyro = new AHRS(Constants.DRIVE_TRAIN_GYRO);
-
-
     enum DriveState {
-        
     }
+    public static class DriveState{
+        public gyroAngle = 0;
+        public 
+
+    } 
 
     private void configureMaster(TalonSRX talon, boolean left) {
     talon.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 5, 100);
@@ -95,7 +96,6 @@ public class DriveTrain extends Subsystems{
         talon1.setNeutralMode(NeutralMode.Coast);
         talon2.setNeutralMode(NeutralMode.Coast);
     }
-
 }
 
 /*

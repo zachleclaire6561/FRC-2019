@@ -59,7 +59,7 @@ public class Elevator extends Subsystems {
 
     @Override 
     public void stop(){
-        
+        talon1.setSelectedSensorPosition(0,0,0);
     }
 
     @Override 
