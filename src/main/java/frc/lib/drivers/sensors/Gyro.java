@@ -1,4 +1,4 @@
-package frc.lib.drivers;
+package frc.lib.drivers.sensors;
 
 import frc.robot.Constants;
 

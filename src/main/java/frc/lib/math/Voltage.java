@@ -16,4 +16,8 @@ public class Voltage{
         return minVoltage + analogValue * (systemVoltage - minVoltage);
     }
 
+    public static double voltageToAnalog(double voltage, double systemVoltage){
+        return voltage/systemVoltage;
+    }
+
 }

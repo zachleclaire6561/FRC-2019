@@ -1,4 +1,4 @@
-package frc.lib.drivers;
+package frc.lib.drivers.motorcontrollers;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;

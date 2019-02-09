@@ -82,8 +82,9 @@ public class PID{
     }
     
     public void setRange(double min, double max) {
-        if(min > max) {
-            //throw new
+        if(! (min > max)) {
+            maxOutput = max;
+            minOutput = min;
         }
     }
     

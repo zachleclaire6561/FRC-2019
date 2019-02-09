@@ -7,12 +7,12 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.subsystems.DriveTrain;
+
+import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -24,10 +24,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 public class Robot extends TimedRobot {
 
   DriveTrain driveBase = new DriveTrain();
- 
-  private static XboxController controller = new XboxController(0);
-  private Joystick joystick1 = new Joystick(0);
-  private Joystick joystick2 = new Joystick(1);
   
   /**
    * This function is run when the robot is first started up and should be used
@@ -35,24 +31,27 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    AnalogInput.setGlobalSampleRate(62500);
     
   }
 
   @Override
   public void autonomousInit() {
+
   }
 
   @Override
   public void autonomousPeriodic() {
+
   }
 
   @Override
   public void teleopInit() {
+
   }
 
   @Override
   public void teleopPeriodic() {
-    driveBase.tankDrive(joystick1.getY() , joystick2.getY());
     
   }
 
@@ -62,6 +61,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
+  
   }
 
 }
