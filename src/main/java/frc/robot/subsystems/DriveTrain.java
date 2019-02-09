@@ -24,11 +24,13 @@ public class DriveTrain extends Subsystems{
     private VictorSPX victor2;
     enum DriveState {
     }
+    /*
     public static class DriveState{
         public gyroAngle = 0;
         public 
 
     } 
+    */
 
     private void configureMaster(TalonSRX talon, boolean left) {
     talon.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 5, 100);
