@@ -14,6 +14,8 @@ public class Constants{
     //PWM Ports
     public static final int INTAKE_MTR_1  = 0;
     public static final int INTAKE_MTR_2  = 1;
+    public static final int FORKLIFT_MTR  = 2;
+    public static final double FORKLIFT_SERVO = 1;
 
     //MXP Ports
     public static final SerialPort.Port  DRIVE_TRAIN_GYRO = SerialPort.Port.kMXP;

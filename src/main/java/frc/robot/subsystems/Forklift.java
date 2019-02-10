@@ -7,13 +7,13 @@ import frc.robot.Constants;
 
 public class Forklift extends Subsystems{
     
-    Spark spark1 = new Spark(Constants.);
+    Spark spark1 = new Spark(Constants.FORKLIFT_MTR);
     public enum forkLiftState{
 
     }
 
     public Forklift(){
-        solenoid1 = new DoubleSolenoid(Constants.DOUBLE_SOLENOID_1, Constants.DOUBLE_SOLENOID_2);
+
     }
 
     @Override 
