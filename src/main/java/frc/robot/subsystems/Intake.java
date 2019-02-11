@@ -20,10 +20,19 @@ public class Intake extends Subsystems{
         IN
     }
 
+    private static Intake intakeInstance= null;
+
     public Intake(){
         Spark1 = new Sparky(Constants.INTAKE_MTR_1, Constants.INTAKE_VOLTAGE_RAMP_RATE);
         Spark2 = new Sparky(Constants.INTAKE_MTR_2, Constants.INTAKE_VOLTAGE_RAMP_RATE);
         pistonController = new DoubleSolenoid(Constants.DOUBLE_SOLENOID_1, Constants.DOUBLE_SOLENOID_2);
+    }
+
+    public static Intake getInstance(){
+        if( intakeInstance == null){
+            intakeInstance = new Intake();
+        }
+        return intakeInstance;
     }
 
     @Override

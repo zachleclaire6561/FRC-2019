@@ -28,6 +28,7 @@ public class Elevator extends Subsystems {
     private PID pidHeightController = new PID(kP, kI, kD);
     private ElevatorState elvState = ElevatorState.LOADINGDISK;
 
+
     // limit switch
 
     public enum ElevatorState{
@@ -36,6 +37,8 @@ public class Elevator extends Subsystems {
         BRAKE, 
         MOVING
     }
+
+    private static Elevator elevatorInstance = null;
 
     private void configureMaster(TalonSRX talon) {
         talon.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 5, 100);
@@ -58,6 +61,13 @@ public class Elevator extends Subsystems {
         configureMaster(talon1);
 
         talon2 = TalonSRXFactory.createPermanentSlaveTalon(Constants.ELEVATOR_MTR_2, Constants.ELEVATOR_MTR_1);
+    }
+
+    public static Elevator getInstance(){
+        if(elevatorInstance == null){
+            elevatorInstance = new Elevator();
+        }
+        return elevatorInstance;
     }
 
     @Override 

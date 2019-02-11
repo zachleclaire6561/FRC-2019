@@ -7,30 +7,19 @@
 
 package frc.robot;
 
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.*;
+import frc.robot.controls.*;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.XboxController;
 
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the TimedRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the build.gradle file in the
- * project.
- */
+import edu.wpi.first.wpilibj.AnalogInput;
+
+
+
 public class Robot extends TimedRobot {
 
-  DriveTrain driveBase = new DriveTrain();
-  Elevator elevator = new Elevator();
+  Superstructure superstruct = new Superstructure();
   
-  
-  /**
-   * This function is run when the robot is first started up and should be used
-   * for any initialization code.
-   */
   @Override
   public void robotInit() {
     AnalogInput.setGlobalSampleRate(62500);

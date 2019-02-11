@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 public class Forklift extends Subsystems{
  
 
+    private static Forklift forkliftInstance = null;
+
     public enum forkLiftState{
 
     }
@@ -15,6 +17,14 @@ public class Forklift extends Subsystems{
        
        
     }
+
+    public static Forklift getInstance(){
+        if( forkliftInstance == null){
+            forkliftInstance = new Forklift();
+        }
+        return forkliftInstance;
+    }
+
 
     @Override 
     public void zeroSensors(){

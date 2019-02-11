@@ -27,13 +27,8 @@ public class DriveTrain extends Subsystems{
 
     enum DriveState {
     }
-    /*
-    public static class DriveState{
-        public gyroAngle = 0;
-        public 
 
-    } 
-    */
+    public static DriveTrain driveTrainInstance = null;
 
     private void configureMaster(TalonSRX talon, boolean left) {
     talon.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 5, 100);
@@ -63,6 +58,13 @@ public class DriveTrain extends Subsystems{
      
         victor2 = VictorSPXFactory.createPermanentSlaveVictor(Constants.DRIVE_TRAIN_MTR_RIGHT_BACK, Constants.DRIVE_TRAIN_MTR_RIGHT_FRONT);
         victor2.setInverted(true);
+    }
+
+    public static DriveTrain getInstance(){
+        if(driveTrainInstance == null){
+            driveTrainInstance = new DriveTrain();
+        }
+        return driveTrainInstance;
     }
 
     @Override
