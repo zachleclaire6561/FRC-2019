@@ -1,8 +1,8 @@
 //  This is the class for the Drive Train. It will contain all of the functions the drive train will us
 package frc.robot.subsystems;
 
-import frc.lib.drivers.TalonSRXFactory;
-import frc.lib.drivers.VictorSPXFactory;
+import frc.lib.drivers.motorcontrollers.TalonSRXFactory;
+import frc.lib.drivers.motorcontrollers.VictorSPXFactory;
 import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -22,6 +22,9 @@ public class DriveTrain extends Subsystems{
     private TalonSRX talon2;
     private VictorSPX victor1;
     private VictorSPX victor2;
+
+    // add Gyro here
+
     enum DriveState {
     }
     /*

@@ -44,9 +44,7 @@ public class Constants{
     PID constants for elevator
     */ 
 
-    public static final double kP = 0;
-    public static final double kI = 0;
-    public static final double kD = 0;
+   
     
 
 }

@@ -24,6 +24,8 @@ import edu.wpi.first.wpilibj.XboxController;
 public class Robot extends TimedRobot {
 
   DriveTrain driveBase = new DriveTrain();
+  Elevator elevator = new Elevator();
+  
   
   /**
    * This function is run when the robot is first started up and should be used

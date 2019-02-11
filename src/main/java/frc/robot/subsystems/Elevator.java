@@ -19,14 +19,22 @@ public class Elevator extends Subsystems {
     private TalonSRX talon1;
     private TalonSRX talon2;
 
-    private PID pidHeightController = new PID(Constants.kP, Constants.kI, Constants.kD);
+    public double kP = 0;
+    public double kI = 0;
+    public double kD = 0;
+
+    public double tolerance = 1; 
+
+    private PID pidHeightController = new PID(kP, kI, kD);
     private ElevatorState elvState = ElevatorState.LOADINGDISK;
+
+    // limit switch
 
     public enum ElevatorState{
         LOADINGDISK,
         LOADINGCARGO,
-        ROCKET,
-        BRAKE
+        BRAKE, 
+        MOVING
     }
 
     private void configureMaster(TalonSRX talon) {
@@ -50,12 +58,11 @@ public class Elevator extends Subsystems {
         configureMaster(talon1);
 
         talon2 = TalonSRXFactory.createPermanentSlaveTalon(Constants.ELEVATOR_MTR_2, Constants.ELEVATOR_MTR_1);
-
-        
     }
 
     @Override 
     public void zeroSensors(){
+        height = 0;
         talon1.setSelectedSensorPosition(0, 0, 0);
         pidHeightController.resetIntegrator();
     }
@@ -72,22 +79,30 @@ public class Elevator extends Subsystems {
 
     @Override 
     public void onLoop(){
+        updatePosition();
+        updateState();
+    }
+
+    public synchronized void updatePosition(){
         if( ! (elvState == ElevatorState.BRAKE))
         talon1.set(ControlMode.PercentOutput, pidHeightController.calculate(height));
     }
 
-    public void setHeight(double height) {
+    public synchronized void updateState(){
+        if(pidHeightController.onTarget(tolerance)){
+            elvState = ElevatorState.BRAKE;
+        }
+    }
+
+    public synchronized void setHeight(double height) {
         goalHeight = height;
+        pidHeightController.setSetPoint(goalHeight);
     }
 
-    public void configurePID(){
-        pidHeightController.
-    }
-
-    public void ResetHeight(){
+    public synchronized void ResetHeight(){
         height = 0;
         talon1.setSelectedSensorPosition(0, 0, 0);
-        elvState = ElevatorState.;
+        elvState = ElevatorState.MOVING;
     }
 
     //Accessors
@@ -105,6 +120,6 @@ public class Elevator extends Subsystems {
     }
 
     public double getVelocity(){
-       return 1;
+       return getRawVelocity() * Constants.ELEVATOR_TICKS_TO_DISTANCE;
     }
 }

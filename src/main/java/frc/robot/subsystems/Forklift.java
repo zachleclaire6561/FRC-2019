@@ -5,18 +5,15 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 public class Forklift extends Subsystems{
-    int sPort1;
-    int sPort2;
-    DoubleSolenoid solenoid1;
+ 
 
     public enum forkLiftState{
 
     }
 
-    public Forklift(int sPort1, int sPort2){
-        this.sPort1 = sPort1;
-        this.sPort2 = sPort2;
-        solenoid1 = new DoubleSolenoid(sPort1, sPort2);
+    public Forklift(){
+       
+       
     }
 
     @Override 
@@ -32,18 +29,6 @@ public class Forklift extends Subsystems{
     @Override 
     public void onLoop(){
 
-    }
-
-    public void pistonOut(){
-        solenoid1.set(DoubleSolenoid.Value.kForward);
-    }
-    
-    public void reverse(){
-       solenoid1.set(DoubleSolenoid.Value.kReverse);
-    }
-
-    public void off(){
-        solenoid1.set(DoubleSolenoid.Value.kOff);  
     }
 
     @Override
