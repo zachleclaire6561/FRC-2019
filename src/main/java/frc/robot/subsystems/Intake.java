@@ -4,6 +4,8 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants;
 import frc.lib.drivers.motorcontrollers.Sparky;
+import frc.robot.loops.Looper;
+import frc.robot.loops.Loop;
 
 import  edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Spark;
@@ -21,6 +23,30 @@ public class Intake extends Subsystems{
     }
 
     private static Intake intakeInstance= null;
+
+    public Loop loop = new Loop(){
+        @Override 
+        public void onStart(double timeStamp){
+            synchronized(Intake.this){
+
+            }
+        }
+
+        @Override 
+        public void onLoop(double timeStamp){
+            synchronized(Intake.this){
+
+            }
+        }
+
+        @Override 
+        public void onStop(double timeStamp){
+            synchronized(Intake.this){
+
+            }
+        }
+
+    };
 
     public Intake(){
         Spark1 = new Sparky(Constants.INTAKE_MTR_1, Constants.INTAKE_VOLTAGE_RAMP_RATE);
@@ -52,9 +78,8 @@ public class Intake extends Subsystems{
     }
 
     @Override 
-    public void onLoop(){
-        Spark1.periodic();
-        Spark2.periodic();
+    public void registerLoop(Looper looper){
+        looper.register(loop);
     }
 
     public void set(double power){
@@ -71,4 +96,8 @@ public class Intake extends Subsystems{
             intakeState = IntakeState.IN;
         }
     } 
+
+    public IntakeState getState(){
+        return intakeState;
+    }
 }

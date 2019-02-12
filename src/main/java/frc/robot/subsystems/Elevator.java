@@ -3,6 +3,8 @@ package frc.robot.subsystems;
 import frc.robot.Constants;
 import frc.lib.math.PID;
 import frc.lib.drivers.motorcontrollers.*;
+import frc.robot.loops.Looper;
+import frc.robot.loops.Loop;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -30,6 +32,30 @@ public class Elevator extends Subsystems {
 
 
     // limit switch
+
+    public Loop loop = new Loop(){
+        @Override 
+        public void onStart(double timeStamp){
+            synchronized(Elevator.this){
+
+            }
+        }
+
+        @Override 
+        public void onLoop(double timeStamp){
+            synchronized(Elevator.this){
+
+            }
+        }
+
+        @Override 
+        public void onStop(double timeStamp){
+            synchronized(Elevator.this){
+
+            }
+        }
+
+    };
 
     public enum ElevatorState{
         LOADINGDISK,
@@ -82,15 +108,15 @@ public class Elevator extends Subsystems {
         talon1.setSelectedSensorPosition(0,0,0);
     }
 
+    
     @Override 
-    public void displaySmartDashBoard(){
-
+    public void registerLoop(Looper looper){
+        looper.register(loop);
     }
 
     @Override 
-    public void onLoop(){
-        updatePosition();
-        updateState();
+    public void displaySmartDashBoard(){
+
     }
 
     public synchronized void updatePosition(){

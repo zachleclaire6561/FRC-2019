@@ -1,7 +1,6 @@
 package frc.lib.drivers.motorcontrollers;
 
 import frc.lib.math.*;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Spark;
 
 /*
@@ -15,15 +14,13 @@ public class Sparky {
     private double voltageApplied;
     private double desiredVoltage;
     private double rampRate;
-    private double dt;
 
     private double deadband;
 
-
-    public Sparky(int portPWM, double dt, double rampRate){
+    public Sparky(int portPWM, double rampRate){
         this.portPWM = portPWM;
         this.portPDP = portPWM;
-        this.dt = dt;
+       
         this.rampRate = rampRate;
         sparky = new Spark(portPWM);
     }
@@ -34,7 +31,7 @@ public class Sparky {
 
     public void periodic(double systemVoltage){
         if(Math.abs(desiredVoltage - voltageApplied ) > deadband){
-        voltageApplied += rampRate * dt * (desiredVoltage > voltageApplied ? 1 : -1);
+        voltageApplied += rampRate * (desiredVoltage > voltageApplied ? 1 : -1);
         }
         sparky.set(Voltage.voltageToAnalog(voltageApplied, systemVoltage));
     }

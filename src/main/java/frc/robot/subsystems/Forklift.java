@@ -3,6 +3,8 @@
 
 package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import frc.robot.loops.Looper;
+import frc.robot.loops.Loop;
 
 public class Forklift extends Subsystems{
  
@@ -10,8 +12,32 @@ public class Forklift extends Subsystems{
     private static Forklift forkliftInstance = null;
 
     public enum forkLiftState{
-
+        
     }
+
+    public Loop loop = new Loop(){
+        @Override 
+        public void onStart(double timeStamp){
+            synchronized(Forklift.this){
+
+            }
+        }
+
+        @Override 
+        public void onLoop(double timeStamp){
+            synchronized(Forklift.this){
+
+            }
+        }
+
+        @Override 
+        public void onStop(double timeStamp){
+            synchronized(Forklift.this){
+
+            }
+        }
+
+    };
 
     public Forklift(){
        
@@ -36,13 +62,13 @@ public class Forklift extends Subsystems{
 
     }
 
-    @Override 
-    public void onLoop(){
-
-    }
-
     @Override
     public void displaySmartDashBoard(){
 
+    }
+
+    @Override 
+    public void registerLoop(Looper looper){
+        looper.register(loop);
     }
 }

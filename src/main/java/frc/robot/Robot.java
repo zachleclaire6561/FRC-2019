@@ -9,21 +9,27 @@ package frc.robot;
 
 import frc.robot.subsystems.*;
 import frc.robot.controls.*;
+import frc.robot.controls.*;
+import frc.robot.loops.Looper;
+
 
 import edu.wpi.first.wpilibj.TimedRobot;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 
-
-
 public class Robot extends TimedRobot {
 
-  Superstructure superstruct = new Superstructure();
-  
+  private Superstructure superstruct = Superstructure.getInstance();
+  private Looper loops = new Looper(); 
+
+
+  private XBox xbox = new XBox(Constants.XBOX_PORT);
+  private Joysticks joysticks = new Joysticks(Constants.JOYSTICK_PORT_1, Constants.JOYSTICK_PORT_2);
+
   @Override
   public void robotInit() {
     AnalogInput.setGlobalSampleRate(62500);
-    
+    registerLooper();
   }
 
   @Override
@@ -43,7 +49,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    
+    driveTrain();
   }
 
   @Override
@@ -53,6 +59,14 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
   
+  }
+
+  public void registerLooper(){
+    superstruct.registerLoops(loops);
+  }
+
+  public void driveTrain(){
+    superstruct.tankDrive(joysticks.getY1(), joysticks.getY2());
   }
 
 }

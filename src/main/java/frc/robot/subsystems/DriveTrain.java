@@ -3,10 +3,11 @@ package frc.robot.subsystems;
 
 import frc.lib.drivers.motorcontrollers.TalonSRXFactory;
 import frc.lib.drivers.motorcontrollers.VictorSPXFactory;
+import frc.robot.loops.Looper;
+import frc.robot.loops.Loop;
 import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import edu.wpi.first.wpilibj.SerialPort;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
@@ -14,8 +15,6 @@ import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.ErrorCode;
-import com.kauailabs.navx.frc.AHRS;
-//import com.ctre.phoenix.motorcontrol.can.;
 
 public class DriveTrain extends Subsystems{
     private TalonSRX talon1;
@@ -23,28 +22,57 @@ public class DriveTrain extends Subsystems{
     private VictorSPX victor1;
     private VictorSPX victor2;
 
+    public Loop loop = new Loop(){
+        @Override 
+        public void onStart(double timeStamp){
+            synchronized(DriveTrain.this){
+
+            }
+        }
+
+        @Override 
+        public void onLoop(double timeStamp){
+            synchronized(DriveTrain.this){
+
+            }
+        }
+
+        @Override 
+        public void onStop(double timeStamp){
+            synchronized(DriveTrain.this){
+
+            }
+        }
+
+    };
+
     // add Gyro here
 
-    enum DriveState {
+    public enum DriveState {
+        BRAKE, 
+        STOP,
+        TELEOP, 
+        AUTO
     }
 
+    private DriveState state = DriveState.STOP; 
     public static DriveTrain driveTrainInstance = null;
 
     private void configureMaster(TalonSRX talon, boolean left) {
-    talon.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 5, 100);
-    final ErrorCode sensorPresent = talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100); 
-    if (sensorPresent != ErrorCode.OK) {
-        // display somewhere
+        talon.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 5, 100);
+        final ErrorCode sensorPresent = talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100); 
+            if (sensorPresent != ErrorCode.OK) {
+                // display somewhere
+            }
+        talon.setInverted(!left);
+        talon.setSensorPhase(true);
+        talon.enableVoltageCompensation(true);
+        talon.configVoltageCompSaturation(12.0, Constants.kLongCANTimeoutMs);
+        talon.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_50Ms, Constants.kLongCANTimeoutMs);
+        talon.configVelocityMeasurementWindow(1, Constants.kLongCANTimeoutMs);
+        talon.configClosedloopRamp(Constants.DRIVE_VOLTAGE_RAMP_RATE, Constants.kLongCANTimeoutMs);
+        talon.configNeutralDeadband(0.04, 0);
     }
-    talon.setInverted(!left);
-    talon.setSensorPhase(true);
-    talon.enableVoltageCompensation(true);
-    talon.configVoltageCompSaturation(12.0, Constants.kLongCANTimeoutMs);
-    talon.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_50Ms, Constants.kLongCANTimeoutMs);
-    talon.configVelocityMeasurementWindow(1, Constants.kLongCANTimeoutMs);
-    talon.configClosedloopRamp(Constants.DRIVE_VOLTAGE_RAMP_RATE, Constants.kLongCANTimeoutMs);
-    talon.configNeutralDeadband(0.04, 0);
-}
 
     public DriveTrain(){
         talon1  = TalonSRXFactory.createDefaultTalon(Constants.DRIVE_TRAIN_MTR_LEFT_FRONT);
@@ -58,6 +86,10 @@ public class DriveTrain extends Subsystems{
      
         victor2 = VictorSPXFactory.createPermanentSlaveVictor(Constants.DRIVE_TRAIN_MTR_RIGHT_BACK, Constants.DRIVE_TRAIN_MTR_RIGHT_FRONT);
         victor2.setInverted(true);
+    }
+
+    public DriveState getState(){
+        return state;
     }
 
     public static DriveTrain getInstance(){
@@ -78,14 +110,14 @@ public class DriveTrain extends Subsystems{
         coast();
         zeroSensors();
     }
+
+    @Override 
+    public void registerLoop(Looper looper){
+        looper.register(loop);
+    }
     
     @Override
     public void displaySmartDashBoard(){
-        
-    }
-
-    @Override 
-    public void onLoop(){
         
     }
 
@@ -102,6 +134,10 @@ public class DriveTrain extends Subsystems{
     public void coast(){
         talon1.setNeutralMode(NeutralMode.Coast);
         talon2.setNeutralMode(NeutralMode.Coast);
+    }
+
+    public void changeState(DriveState state){
+        this.state = state;
     }
 }
 

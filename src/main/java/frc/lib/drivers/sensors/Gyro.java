@@ -16,6 +16,14 @@ public class Gyro{
        return gyro.getAngle();
     }
 
+    public boolean isConnected(){
+        return gyro.isConnected();
+    }
+
+    public boolean isCalibrating(){
+        return gyro.isCalibrating();
+    }
+
 
 
 }

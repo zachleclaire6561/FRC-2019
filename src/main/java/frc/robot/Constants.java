@@ -30,6 +30,11 @@ public class Constants{
     public static final int DOUBLE_SOLENOID_1 = 0;
     public static final int DOUBLE_SOLENOID_2 = 1; 
 
+    // USB Ports
+    public static final int XBOX_PORT = 1;
+    public static final int JOYSTICK_PORT_1 = 0;
+    public static final int JOYSTICK_PORT_2 = 1;
+
     //Subsystem calibrated constants
     public static final int ELEVATOR_TICKS_TO_DISTANCE = 0;
 
