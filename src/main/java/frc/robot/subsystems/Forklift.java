@@ -2,13 +2,21 @@
 //The forklift is begin used as the intake for the disc and the outtake for the ball
 
 package frc.robot.subsystems;
+
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.Spark;
+
 import frc.robot.loops.Looper;
 import frc.robot.loops.Loop;
+import frc.robot.Constants;
 
 public class Forklift extends Subsystems{
  
-
+    // limit switch code
+    private Spark sparky = new Spark(Constants.FORKLIFT_MTR);
+    private Servo servo = new Servo(Constants.FORKLIFT_SERVO);
     private static Forklift forkliftInstance = null;
 
     public enum forkLiftState{
@@ -19,7 +27,7 @@ public class Forklift extends Subsystems{
         @Override 
         public void onStart(double timeStamp){
             synchronized(Forklift.this){
-
+                servo.set(Constants.FORKLIFT_SERVO_POWER);
             }
         }
 
@@ -40,7 +48,6 @@ public class Forklift extends Subsystems{
     };
 
     public Forklift(){
-       
        
     }
 
@@ -70,5 +77,21 @@ public class Forklift extends Subsystems{
     @Override 
     public void registerLoop(Looper looper){
         looper.register(loop);
+    }
+
+    public void setServoAngle(double angle){
+        servo.setAngle(angle);
+    }
+
+    public void setServoSpeed(double power){
+        servo.set(power);
+    }
+
+    public void setMotorSpeed(double power){
+        sparky.set(power);
+    }
+
+    public double getServoAngle(){
+        return servo.getAngle();
     }
 }

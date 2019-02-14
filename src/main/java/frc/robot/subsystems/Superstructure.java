@@ -4,6 +4,7 @@ import frc.robot.loops.Looper;
 import frc.robot.subsystems.DriveTrain.DriveState;
 import frc.robot.loops.Loop;
 import frc.lib.drivers.sensors.Gyro;
+import frc.robot.Constants;
 
 import edu.wpi.first.wpilibj.Timer;
 
@@ -15,6 +16,8 @@ public class Superstructure extends Subsystems{
     private Forklift forklift = Forklift.getInstance();
     private Intake intake = Intake.getInstance();
     private static Superstructure superstructureInstance = null;
+
+    private boolean intakeState = false;
 
     private Gyro gyro = new Gyro();
 
@@ -155,10 +158,39 @@ public class Superstructure extends Subsystems{
                 // Rocket top
             break;
         }
-        
     }
 
     public boolean checkIntakeSafety(){
         return (intake.getState() == Intake.IntakeState.IN);
     }
+
+    public void setIntakeState(boolean out){
+        intake.setState(out);
+    }
+
+    public void reverseIntakeState(){
+        setIntakeState(intakeState);
+        intakeState = !intakeState;
+    }
+
+    public void setIntakeRollers(double power){
+        intake.set(power);
+    }
+
+    public void setForkliftRollers(double power ){
+        forklift.setMotorSpeed(power);
+    }
+
+    public void setForkliftAngle(double angle){
+        forklift.setServoAngle(angle);
+    }
+
+    public void setElevatorHeight(double height){
+        elevator.setHeight(height);
+    }
+
+    public void resetElevator(){
+        elevator.resetHeight();
+    }
+
 }

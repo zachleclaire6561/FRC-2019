@@ -1,9 +1,9 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
-import frc.lib.drivers.motorcontrollers.Sparky;
 import frc.robot.loops.Looper;
 import frc.robot.loops.Loop;
+import frc.lib.math.PID;
 
 import  edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Spark;
@@ -11,9 +11,17 @@ import edu.wpi.first.wpilibj.Spark;
 public class Intake extends Subsystems{
 
     private DoubleSolenoid pistonController;
-    private Sparky Spark1;
-    private Sparky Spark2;
+    private Spark Spark1;
+    private Spark Spark2;
+
+    double kP = 1.0;
+    double kI = 0.0;
+    double kD = 0.0;
+
+    private PID pid = new PID(kP, kD, kI);
+    
     public IntakeState intakeState;
+
 
     public enum IntakeState{
         OUT,
@@ -26,7 +34,7 @@ public class Intake extends Subsystems{
         @Override 
         public void onStart(double timeStamp){
             synchronized(Intake.this){
-
+                pid.setRange(-1,1);
             }
         }
 
@@ -43,12 +51,11 @@ public class Intake extends Subsystems{
 
             }
         }
-
     };
 
     public Intake(){
-        Spark1 = new Sparky(Constants.INTAKE_MTR_1, Constants.INTAKE_VOLTAGE_RAMP_RATE);
-        Spark2 = new Sparky(Constants.INTAKE_MTR_2, Constants.INTAKE_VOLTAGE_RAMP_RATE);
+        Spark1 = new Spark(Constants.INTAKE_MTR_1);
+        Spark2 = new Spark(Constants.INTAKE_MTR_2);
         pistonController = new DoubleSolenoid(Constants.DOUBLE_SOLENOID_1, Constants.DOUBLE_SOLENOID_2);
     }
 
@@ -72,7 +79,7 @@ public class Intake extends Subsystems{
     @Override
     public void stop(){
         Spark1.set(0);
-        Spark2.set(1);
+        Spark2.set(0);
     }
 
     @Override 

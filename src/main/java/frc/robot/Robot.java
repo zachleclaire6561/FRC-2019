@@ -47,7 +47,10 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    driveTrain();
+    driveTrainPeriodic();
+    elevatorPeriodic();
+    intakePeriodic();
+    forkliftPeriodic();
   }
 
   @Override
@@ -63,8 +66,25 @@ public class Robot extends TimedRobot {
     superstruct.registerLoops(loops);
   }
 
-  public void driveTrain(){
+  public void driveTrainPeriodic(){
     superstruct.tankDrive(joysticks.getY1(), joysticks.getY2());
+  }
+
+  public void elevatorPeriodic(){
+
+  }
+
+  public void intakePeriodic(){
+    if(xbox.getLeftTrigger() > 0.4){
+      superstruct.setIntakeRollers(Constants.INTAKE_MOTOR_SPEED);
+    }
+    if(xbox.getButtonBNewPress()){
+      superstruct.reverseIntakeState();
+    }
+  }
+
+  public void forkliftPeriodic(){
+    
   }
 
 }

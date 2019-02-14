@@ -37,7 +37,7 @@ public class Elevator extends Subsystems {
         @Override 
         public void onStart(double timeStamp){
             synchronized(Elevator.this){
-
+                zeroSensors();
             }
         }
 
@@ -51,7 +51,7 @@ public class Elevator extends Subsystems {
         @Override 
         public void onStop(double timeStamp){
             synchronized(Elevator.this){
-
+                stop();
             }
         }
 
@@ -119,15 +119,14 @@ public class Elevator extends Subsystems {
 
     }
 
-    public synchronized void updatePosition(){
-        if( ! (elvState == ElevatorState.BRAKE))
-        talon1.set(ControlMode.PercentOutput, pidHeightController.calculate(height));
+    public void updatePosition(){
+        if( elvState != ElevatorState.BRAKE)
+            talon1.set(ControlMode.PercentOutput, pidHeightController.calculate(height));
     }
 
-    public synchronized void updateState(){
-        if(pidHeightController.onTarget(tolerance)){
+    public void updateBrake(){
+        if(pidHeightController.onTarget(tolerance))
             elvState = ElevatorState.BRAKE;
-        }
     }
 
     public synchronized void setHeight(double height) {
@@ -135,7 +134,7 @@ public class Elevator extends Subsystems {
         pidHeightController.setSetPoint(goalHeight);
     }
 
-    public synchronized void ResetHeight(){
+    public synchronized void resetHeight(){
         height = 0;
         talon1.setSelectedSensorPosition(0, 0, 0);
         elvState = ElevatorState.MOVING;
