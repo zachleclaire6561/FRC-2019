@@ -130,25 +130,15 @@ public class Elevator extends Subsystems {
         }
     }
 
-<<<<<<< HEAD
-    /*public void configurePID(){
-        pidHeightController;
-    }*/
-=======
     public synchronized void setHeight(double height) {
         goalHeight = height;
         pidHeightController.setSetPoint(goalHeight);
     }
->>>>>>> c856c3e8ce79fe2f167024ae2edf4f00c500e8b4
 
     public synchronized void ResetHeight(){
         height = 0;
         talon1.setSelectedSensorPosition(0, 0, 0);
-<<<<<<< HEAD
-        //elvState = desiredState;
-=======
         elvState = ElevatorState.MOVING;
->>>>>>> c856c3e8ce79fe2f167024ae2edf4f00c500e8b4
     }
 
     //Accessors

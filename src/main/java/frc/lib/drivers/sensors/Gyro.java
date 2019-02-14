@@ -16,8 +16,6 @@ public class Gyro{
        return gyro.getAngle();
     }
 
-<<<<<<< HEAD
-=======
     public boolean isConnected(){
         return gyro.isConnected();
     }
@@ -28,5 +26,4 @@ public class Gyro{
 
 
 
->>>>>>> c856c3e8ce79fe2f167024ae2edf4f00c500e8b4
 }

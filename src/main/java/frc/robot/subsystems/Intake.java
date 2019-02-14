@@ -76,14 +76,8 @@ public class Intake extends Subsystems{
     }
 
     @Override 
-<<<<<<< HEAD
-    public void onLoop(){
-        //Spark1.periodic();
-        //Spark2.periodic();
-=======
     public void registerLoop(Looper looper){
         looper.register(loop);
->>>>>>> c856c3e8ce79fe2f167024ae2edf4f00c500e8b4
     }
 
     public void set(double power){

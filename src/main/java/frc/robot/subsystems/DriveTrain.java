@@ -3,11 +3,8 @@ package frc.robot.subsystems;
 
 import frc.lib.drivers.motorcontrollers.TalonSRXFactory;
 import frc.lib.drivers.motorcontrollers.VictorSPXFactory;
-<<<<<<< HEAD
-=======
 import frc.robot.loops.Looper;
 import frc.robot.loops.Loop;
->>>>>>> c856c3e8ce79fe2f167024ae2edf4f00c500e8b4
 import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -24,11 +21,6 @@ public class DriveTrain extends Subsystems{
     private TalonSRX talon2;
     private VictorSPX victor1;
     private VictorSPX victor2;
-<<<<<<< HEAD
-    enum DriveState {
-
-        
-=======
 
     public Loop loop = new Loop(){
         @Override 
@@ -61,7 +53,6 @@ public class DriveTrain extends Subsystems{
         STOP,
         TELEOP, 
         AUTO
->>>>>>> c856c3e8ce79fe2f167024ae2edf4f00c500e8b4
     }
 
     private DriveState state = DriveState.STOP; 
@@ -130,16 +121,7 @@ public class DriveTrain extends Subsystems{
         
     }
 
-<<<<<<< HEAD
-    @Override 
-    public void onLoop(){
-        
-    }
-
-    public synchronized void tankDrive(double speed1, double speed2){
-=======
     public void tankDrive(double speed1, double speed2){
->>>>>>> c856c3e8ce79fe2f167024ae2edf4f00c500e8b4
         talon1.set(ControlMode.PercentOutput, speed1);
         talon2.set(ControlMode.PercentOutput, speed2);
     }
