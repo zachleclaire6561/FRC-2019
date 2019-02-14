@@ -2,12 +2,16 @@
 //The forklift is begin used as the intake for the disc and the outtake for the ball
 
 package frc.robot.subsystems;
+
 import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.Servo;
+
 import frc.robot.Constants;
 
 public class Forklift extends Subsystems{
     
     Spark spark1 = new Spark(Constants.FORKLIFT_MTR);
+    Servo servo1 = new Servo(Constants.FORKLIFT_SERVO);
     public enum forkLiftState{
 
     }
@@ -32,15 +36,15 @@ public class Forklift extends Subsystems{
     }
 
     public void pistonOut(){
-        solenoid1.set(DoubleSolenoid.Value.kForward);
+     
     }
     
     public void reverse(){
-       solenoid1.set(DoubleSolenoid.Value.kReverse);
+      
     }
 
     public void off(){
-        solenoid1.set(DoubleSolenoid.Value.kOff);  
+       
     }
 
     @Override

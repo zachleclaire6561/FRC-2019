@@ -11,6 +11,7 @@ import frc.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -24,6 +25,10 @@ import edu.wpi.first.wpilibj.XboxController;
 public class Robot extends TimedRobot {
 
   DriveTrain driveBase = new DriveTrain();
+  PowerDistributionPanel pdp = new PowerDistributionPanel(0);
+  XboxController xboxController = new XboxController(2);
+  Joystick j1 = new Joystick(0);
+  Joystick j2 = new Joystick(1);
   
   /**
    * This function is run when the robot is first started up and should be used
@@ -32,7 +37,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     AnalogInput.setGlobalSampleRate(62500);
-    
   }
 
   @Override

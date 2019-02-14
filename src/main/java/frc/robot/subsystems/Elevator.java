@@ -80,14 +80,14 @@ public class Elevator extends Subsystems {
         goalHeight = height;
     }
 
-    public void configurePID(){
-        pidHeightController.
-    }
+    /*public void configurePID(){
+        pidHeightController;
+    }*/
 
     public void ResetHeight(){
         height = 0;
         talon1.setSelectedSensorPosition(0, 0, 0);
-        elvState = ElevatorState.;
+        //elvState = desiredState;
     }
 
     //Accessors

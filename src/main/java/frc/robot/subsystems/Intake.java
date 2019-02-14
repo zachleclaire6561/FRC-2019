@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-
-
 import frc.robot.Constants;
 import frc.lib.drivers.motorcontrollers.Sparky;
 
@@ -44,8 +42,8 @@ public class Intake extends Subsystems{
 
     @Override 
     public void onLoop(){
-        Spark1.periodic();
-        Spark2.periodic();
+        //Spark1.periodic();
+        //Spark2.periodic();
     }
 
     public void set(double power){

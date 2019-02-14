@@ -1,8 +1,8 @@
 //  This is the class for the Drive Train. It will contain all of the functions the drive train will us
 package frc.robot.subsystems;
 
-import frc.lib.drivers.TalonSRXFactory;
-import frc.lib.drivers.VictorSPXFactory;
+import frc.lib.drivers.motorcontrollers.TalonSRXFactory;
+import frc.lib.drivers.motorcontrollers.VictorSPXFactory;
 import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -86,17 +86,17 @@ public class DriveTrain extends Subsystems{
         
     }
 
-    public void tankDrive(double speed1, double speed2){
+    public synchronized void tankDrive(double speed1, double speed2){
         talon1.set(ControlMode.PercentOutput, speed1);
         talon2.set(ControlMode.PercentOutput, speed2);
     }
 
-    public void brake(){
+    public synchronized void brake(){
         talon1.setNeutralMode(NeutralMode.Brake);
         talon2.setNeutralMode(NeutralMode.Brake);
     }
 
-    public void coast(){
+    public synchronized void coast(){
         talon1.setNeutralMode(NeutralMode.Coast);
         talon2.setNeutralMode(NeutralMode.Coast);
     }

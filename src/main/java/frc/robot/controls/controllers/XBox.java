@@ -1,4 +1,4 @@
-package frc.robot.controls;
+package frc.robot.controls.controllers;
 
 public class XBox{
 
