@@ -7,23 +7,24 @@
 
 package frc.robot;
 
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.*;
+import frc.robot.controls.*;
+import frc.robot.controls.*;
+import frc.robot.loops.Looper;
+
 
 import edu.wpi.first.wpilibj.TimedRobot;
+<<<<<<< HEAD
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.XboxController;
+=======
 
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the TimedRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the build.gradle file in the
- * project.
- */
+>>>>>>> c856c3e8ce79fe2f167024ae2edf4f00c500e8b4
+import edu.wpi.first.wpilibj.AnalogInput;
+
 public class Robot extends TimedRobot {
 
+<<<<<<< HEAD
   DriveTrain driveBase = new DriveTrain();
   PowerDistributionPanel pdp = new PowerDistributionPanel(0);
   XboxController xboxController = new XboxController(2);
@@ -37,6 +38,19 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     AnalogInput.setGlobalSampleRate(62500);
+=======
+  private Superstructure superstruct = Superstructure.getInstance();
+  private Looper loops = new Looper(); 
+
+
+  private XBox xbox = new XBox(Constants.XBOX_PORT);
+  private Joysticks joysticks = new Joysticks(Constants.JOYSTICK_PORT_1, Constants.JOYSTICK_PORT_2);
+
+  @Override
+  public void robotInit() {
+    AnalogInput.setGlobalSampleRate(62500);
+    registerLooper();
+>>>>>>> c856c3e8ce79fe2f167024ae2edf4f00c500e8b4
   }
 
   @Override
@@ -56,7 +70,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    
+    driveTrain();
   }
 
   @Override
@@ -68,4 +82,16 @@ public class Robot extends TimedRobot {
   
   }
 
+<<<<<<< HEAD
 }
+=======
+  public void registerLooper(){
+    superstruct.registerLoops(loops);
+  }
+
+  public void driveTrain(){
+    superstruct.tankDrive(joysticks.getY1(), joysticks.getY2());
+  }
+
+}
+>>>>>>> c856c3e8ce79fe2f167024ae2edf4f00c500e8b4

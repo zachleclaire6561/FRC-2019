@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
-public abstract class Subsystems {
+import frc.robot.loops.Looper;
+
+public abstract class Subsystems{
 
     public abstract void zeroSensors();
     
@@ -8,6 +10,6 @@ public abstract class Subsystems {
     
     public abstract void displaySmartDashBoard();
 
-    public abstract void onLoop();
+    public abstract void registerLoop(Looper looper);
     
 } 

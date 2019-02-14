@@ -3,6 +3,8 @@ package frc.robot.subsystems;
 import frc.robot.Constants;
 import frc.lib.math.PID;
 import frc.lib.drivers.motorcontrollers.*;
+import frc.robot.loops.Looper;
+import frc.robot.loops.Loop;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -19,15 +21,50 @@ public class Elevator extends Subsystems {
     private TalonSRX talon1;
     private TalonSRX talon2;
 
-    private PID pidHeightController = new PID(Constants.kP, Constants.kI, Constants.kD);
+    public double kP = 0;
+    public double kI = 0;
+    public double kD = 0;
+
+    public double tolerance = 1; 
+
+    private PID pidHeightController = new PID(kP, kI, kD);
     private ElevatorState elvState = ElevatorState.LOADINGDISK;
+
+
+    // limit switch
+
+    public Loop loop = new Loop(){
+        @Override 
+        public void onStart(double timeStamp){
+            synchronized(Elevator.this){
+
+            }
+        }
+
+        @Override 
+        public void onLoop(double timeStamp){
+            synchronized(Elevator.this){
+
+            }
+        }
+
+        @Override 
+        public void onStop(double timeStamp){
+            synchronized(Elevator.this){
+
+            }
+        }
+
+    };
 
     public enum ElevatorState{
         LOADINGDISK,
         LOADINGCARGO,
-        ROCKET,
-        BRAKE
+        BRAKE, 
+        MOVING
     }
+
+    private static Elevator elevatorInstance = null;
 
     private void configureMaster(TalonSRX talon) {
         talon.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 5, 100);
@@ -50,12 +87,18 @@ public class Elevator extends Subsystems {
         configureMaster(talon1);
 
         talon2 = TalonSRXFactory.createPermanentSlaveTalon(Constants.ELEVATOR_MTR_2, Constants.ELEVATOR_MTR_1);
+    }
 
-        
+    public static Elevator getInstance(){
+        if(elevatorInstance == null){
+            elevatorInstance = new Elevator();
+        }
+        return elevatorInstance;
     }
 
     @Override 
     public void zeroSensors(){
+        height = 0;
         talon1.setSelectedSensorPosition(0, 0, 0);
         pidHeightController.resetIntegrator();
     }
@@ -65,29 +108,47 @@ public class Elevator extends Subsystems {
         talon1.setSelectedSensorPosition(0,0,0);
     }
 
+    
+    @Override 
+    public void registerLoop(Looper looper){
+        looper.register(loop);
+    }
+
     @Override 
     public void displaySmartDashBoard(){
 
     }
 
-    @Override 
-    public void onLoop(){
+    public synchronized void updatePosition(){
         if( ! (elvState == ElevatorState.BRAKE))
         talon1.set(ControlMode.PercentOutput, pidHeightController.calculate(height));
     }
 
-    public void setHeight(double height) {
-        goalHeight = height;
+    public synchronized void updateState(){
+        if(pidHeightController.onTarget(tolerance)){
+            elvState = ElevatorState.BRAKE;
+        }
     }
 
+<<<<<<< HEAD
     /*public void configurePID(){
         pidHeightController;
     }*/
+=======
+    public synchronized void setHeight(double height) {
+        goalHeight = height;
+        pidHeightController.setSetPoint(goalHeight);
+    }
+>>>>>>> c856c3e8ce79fe2f167024ae2edf4f00c500e8b4
 
-    public void ResetHeight(){
+    public synchronized void ResetHeight(){
         height = 0;
         talon1.setSelectedSensorPosition(0, 0, 0);
+<<<<<<< HEAD
         //elvState = desiredState;
+=======
+        elvState = ElevatorState.MOVING;
+>>>>>>> c856c3e8ce79fe2f167024ae2edf4f00c500e8b4
     }
 
     //Accessors
@@ -105,6 +166,6 @@ public class Elevator extends Subsystems {
     }
 
     public double getVelocity(){
-       return 1;
+       return getRawVelocity() * Constants.ELEVATOR_TICKS_TO_DISTANCE;
     }
 }

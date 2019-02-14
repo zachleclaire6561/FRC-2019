@@ -2,6 +2,8 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants;
 import frc.lib.drivers.motorcontrollers.Sparky;
+import frc.robot.loops.Looper;
+import frc.robot.loops.Loop;
 
 import  edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Spark;
@@ -18,10 +20,43 @@ public class Intake extends Subsystems{
         IN
     }
 
+    private static Intake intakeInstance= null;
+
+    public Loop loop = new Loop(){
+        @Override 
+        public void onStart(double timeStamp){
+            synchronized(Intake.this){
+
+            }
+        }
+
+        @Override 
+        public void onLoop(double timeStamp){
+            synchronized(Intake.this){
+
+            }
+        }
+
+        @Override 
+        public void onStop(double timeStamp){
+            synchronized(Intake.this){
+
+            }
+        }
+
+    };
+
     public Intake(){
         Spark1 = new Sparky(Constants.INTAKE_MTR_1, Constants.INTAKE_VOLTAGE_RAMP_RATE);
         Spark2 = new Sparky(Constants.INTAKE_MTR_2, Constants.INTAKE_VOLTAGE_RAMP_RATE);
         pistonController = new DoubleSolenoid(Constants.DOUBLE_SOLENOID_1, Constants.DOUBLE_SOLENOID_2);
+    }
+
+    public static Intake getInstance(){
+        if( intakeInstance == null){
+            intakeInstance = new Intake();
+        }
+        return intakeInstance;
     }
 
     @Override
@@ -41,9 +76,14 @@ public class Intake extends Subsystems{
     }
 
     @Override 
+<<<<<<< HEAD
     public void onLoop(){
         //Spark1.periodic();
         //Spark2.periodic();
+=======
+    public void registerLoop(Looper looper){
+        looper.register(loop);
+>>>>>>> c856c3e8ce79fe2f167024ae2edf4f00c500e8b4
     }
 
     public void set(double power){
@@ -60,4 +100,8 @@ public class Intake extends Subsystems{
             intakeState = IntakeState.IN;
         }
     } 
+
+    public IntakeState getState(){
+        return intakeState;
+    }
 }
