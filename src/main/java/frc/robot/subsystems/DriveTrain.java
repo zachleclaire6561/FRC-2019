@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 
 import frc.lib.drivers.motorcontrollers.TalonSRXFactory;
 import frc.lib.drivers.motorcontrollers.VictorSPXFactory;
+import frc.lib.drivers.sensors.UltrasonicAnalogSensor;
 import frc.robot.loops.Looper;
 import frc.robot.loops.Loop;
 import frc.robot.Constants;
@@ -22,6 +23,11 @@ public class DriveTrain extends Subsystems{
     private VictorSPX victor1;
     private VictorSPX victor2;
 
+    private double distance1 = 0;
+    private double distance2 = 0;
+    UltrasonicAnalogSensor ultsensor1 = new UltrasonicAnalogSensor(Constants.ULTRASONIC_1);
+    UltrasonicAnalogSensor ultsensor2 = new UltrasonicAnalogSensor(Constants.ULTRASONIC_2);
+
     public Loop loop = new Loop(){
         @Override 
         public void onStart(double timeStamp){
@@ -33,7 +39,8 @@ public class DriveTrain extends Subsystems{
         @Override 
         public void onLoop(double timeStamp){
             synchronized(DriveTrain.this){
-
+                distance1 = ultsensor1.getDistance();
+                distance2 = ultsensor2.getDistance();
             }
         }
 
@@ -138,6 +145,28 @@ public class DriveTrain extends Subsystems{
 
     public void changeState(DriveState state){
         this.state = state;
+    }
+
+    public double getUltrasonicDistance1(){
+        return distance1;
+    }
+
+    public double getUltrasonicDistance2(){
+        return distance2;
+    }
+
+
+    /*
+    If offset < 0, then too far to left
+    If offset > 0, then too far to right
+
+    */
+    public double getDistanceOffset(){
+        return distance1 - distance2;
+    }
+
+    public double getAngleOffset(){
+        return Math.atan(getDistanceOffset() * Constants.ULTRASONIC_SENSOR_DISTANCE);
     }
 }
 

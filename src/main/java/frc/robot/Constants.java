@@ -26,7 +26,7 @@ public class Constants{
 
     //Analog Ports
     public static final int ULTRASONIC_1 = 0; 
-    //public static final int ULTRASONIC_2 = 1; 
+    public static final int ULTRASONIC_2 = 1; 
 
     // PCM Ports
     public static final int DOUBLE_SOLENOID_1 = 0;
@@ -47,6 +47,8 @@ public class Constants{
 
     public static final double FORKLIFT_SERVO_POWER = 0.4;
     public static final double INTAKE_MOTOR_SPEED = 0.6;
+
+    public static final double ULTRASONIC_SENSOR_DISTANCE = 0; // calibrate
 
 
     /*

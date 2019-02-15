@@ -2,8 +2,10 @@ package frc.robot.subsystems;
 
 import frc.robot.loops.Looper;
 import frc.robot.subsystems.DriveTrain.DriveState;
+import frc.robot.subsystems.Elevator.ElevatorState;
 import frc.robot.loops.Loop;
 import frc.lib.drivers.sensors.Gyro;
+import frc.lib.math.PID;
 import frc.robot.Constants;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -19,6 +21,11 @@ public class Superstructure extends Subsystems{
 
     private boolean intakeState = false;
 
+    private double kP = 0.0;
+    private double kI = 0.0;
+    private double kD = 0.0;
+
+    private PID pidDrive = new PID(kP, kI, kD);
     private Gyro gyro = new Gyro();
 
     public Loop loop = new Loop(){
@@ -95,6 +102,11 @@ public class Superstructure extends Subsystems{
         intake.registerLoop(looper);
     }
 
+    /*
+    Robot Subsystems
+
+    */
+
     public void tankDrive(double x1, double x2){
        synchronized(Superstructure.this){
            if(driveBase.getState() == DriveTrain.DriveState.TELEOP){
@@ -103,22 +115,21 @@ public class Superstructure extends Subsystems{
         }
     }
 
-    public void autoDrive(){
+    public void autoAlign(){
         synchronized(Superstructure.this){
             if(driveBase.getState() == DriveTrain.DriveState.AUTO){
-                /*
-                Data needed for autoalignment to work: 
-                a) 
-                - location of vision tape (vertical + angular distance) 
-                    - remember gyro angles so vision isn't needed anymore??? - backup sol if vision doesn't work
-                - distance from target (ultrasonic)
-                How auto align needs to work: 
-                1. wait for retroreflecive tape and button press 
-                3. align so that front of robot is parallel to wall + align robot to be aligned with wall
+                if(driveBase.getAngleOffset() > min){ // insert some value here
+                    double pow = pidDrive.calculate(driveBase.getAngleOffset());
+                    tankDrive(pow, -pow);
+                }
+            }
+        }
+    }
 
-                NOTE: This code will require A LOT more code than can fit in a function 
-                and some things will need to be outside this class
-                */
+    public void autoDriveStraight(double magnitude){
+        synchronized(Superstructure.this){
+            if(driveBase.getState() == DriveTrain.DriveState.AUTO){
+                tankDrive(magnitude, magnitude);
             }
         }
     }
@@ -135,27 +146,27 @@ public class Superstructure extends Subsystems{
         // store heights as static constants in Constants.java 
         switch(pos){
             case 1:
-               //starting position / ball loading height
+              resetElevator();
             break;
 
             case 2: 
-                //disk loading height
+              setElevatorHeight();  // 
             break;
 
             case 3:
-                //cargo disk state
+              setElevatorHeight();  // 
             break;
 
             case 4: 
-                // Rocket bottom
+              setElevatorHeight();  // 
             break;
 
             case 5: 
-                // Rocket mid
+              setElevatorHeight();  // 
             break;
 
             case 6: 
-                // Rocket top
+              setElevatorHeight();  // 
             break;
         }
     }
@@ -191,6 +202,15 @@ public class Superstructure extends Subsystems{
 
     public void resetElevator(){
         elevator.resetHeight();
+    }
+
+    /*
+    Vision code
+
+    */
+
+    public boolean getVisionTape(){
+        return true;
     }
 
 }

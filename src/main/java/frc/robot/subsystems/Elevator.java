@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import frc.robot.Constants;
 import frc.lib.math.PID;
 import frc.lib.drivers.motorcontrollers.*;
+import frc.lib.drivers.sensors.LimitSwitch;
 import frc.robot.loops.Looper;
 import frc.robot.loops.Loop;
 
@@ -20,6 +21,7 @@ public class Elevator extends Subsystems {
     
     private TalonSRX talon1;
     private TalonSRX talon2;
+    private LimitSwitch lim1 = new LimitSwitch(Constants.LIMIT_SWITCH_1);;
 
     public double kP = 0;
     public double kI = 0;
@@ -28,7 +30,7 @@ public class Elevator extends Subsystems {
     public double tolerance = 1; 
 
     private PID pidHeightController = new PID(kP, kI, kD);
-    private ElevatorState elvState = ElevatorState.LOADINGDISK;
+    private ElevatorState elvState = ElevatorState.RESET;
 
 
     // limit switch
@@ -44,7 +46,9 @@ public class Elevator extends Subsystems {
         @Override 
         public void onLoop(double timeStamp){
             synchronized(Elevator.this){
-
+                updatePosition();
+                updateBrake();
+                height = getHeight();
             }
         }
 
@@ -58,10 +62,10 @@ public class Elevator extends Subsystems {
     };
 
     public enum ElevatorState{
-        LOADINGDISK,
-        LOADINGCARGO,
         BRAKE, 
-        MOVING
+        MOVING, 
+        RESET, 
+        BOTTOM
     }
 
     private static Elevator elevatorInstance = null;
@@ -105,9 +109,7 @@ public class Elevator extends Subsystems {
 
     @Override 
     public void stop(){
-        talon1.setSelectedSensorPosition(0,0,0);
     }
-
     
     @Override 
     public void registerLoop(Looper looper){
@@ -129,15 +131,21 @@ public class Elevator extends Subsystems {
             elvState = ElevatorState.BRAKE;
     }
 
-    public synchronized void setHeight(double height) {
-        goalHeight = height;
+    public synchronized void setHeight(double kHeight) {
+        goalHeight = kHeight;
         pidHeightController.setSetPoint(goalHeight);
     }
 
     public synchronized void resetHeight(){
-        height = 0;
-        talon1.setSelectedSensorPosition(0, 0, 0);
-        elvState = ElevatorState.MOVING;
+        if(! lim1.get() && elvState != ElevatorState.BOTTOM){
+            setHeight(-0.5);
+            elvState = ElevatorState.RESET;
+        }
+        else{
+            elvState = ElevatorState.BOTTOM;
+            height = 0;
+            zeroSensors();
+        }
     }
 
     //Accessors
@@ -156,5 +164,9 @@ public class Elevator extends Subsystems {
 
     public double getVelocity(){
        return getRawVelocity() * Constants.ELEVATOR_TICKS_TO_DISTANCE;
+    }
+
+    public boolean getZeroSwitch(){
+        return lim1.get();
     }
 }
