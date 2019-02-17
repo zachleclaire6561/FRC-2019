@@ -15,6 +15,8 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.EntryListenerFlags;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.vision.*;
+import edu.wpi.cscore.VideoSource;
+import org.opencv.core.Mat;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -30,7 +32,7 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   NetworkTableInstance inst = NetworkTableInstance.getDefault();
   NetworkTable table = inst.getTable("GRIP/myBlobsReport");
-  VideoSource camera = new VideoSource();
+  VideoSource camera;
   
 
   /**
