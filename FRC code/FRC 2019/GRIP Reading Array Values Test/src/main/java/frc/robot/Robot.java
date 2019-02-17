@@ -105,6 +105,10 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     VisionThread visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
       pipeline.process(new Mat());
+      System.out.println("Pipeline has processed");
+      System.out.println(pipeline.cvResizeOutput());
+      System.out.println(pipeline.hsvThresholdOutput());
+      System.out.println(pipeline.findBlobsOutput());
     });
   }
 
