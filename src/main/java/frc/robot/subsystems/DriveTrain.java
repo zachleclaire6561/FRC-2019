@@ -3,13 +3,13 @@ package frc.robot.subsystems;
 
 import frc.lib.drivers.motorcontrollers.TalonSRXFactory;
 import frc.lib.drivers.motorcontrollers.VictorSPXFactory;
-import frc.lib.drivers.sensors.UltrasonicAnalogSensor;
 import frc.robot.loops.Looper;
 import frc.robot.loops.Loop;
 import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.kauailabs.navx.frc.AHRS;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod;
@@ -23,11 +23,6 @@ public class DriveTrain extends Subsystems{
     private VictorSPX victor1;
     private VictorSPX victor2;
 
-    private double distance1 = 0;
-    private double distance2 = 0;
-    UltrasonicAnalogSensor ultsensor1 = new UltrasonicAnalogSensor(Constants.ULTRASONIC_1);
-    UltrasonicAnalogSensor ultsensor2 = new UltrasonicAnalogSensor(Constants.ULTRASONIC_2);
-
     public Loop loop = new Loop(){
         @Override 
         public void onStart(double timeStamp){
@@ -39,8 +34,7 @@ public class DriveTrain extends Subsystems{
         @Override 
         public void onLoop(double timeStamp){
             synchronized(DriveTrain.this){
-                distance1 = ultsensor1.getDistance();
-                distance2 = ultsensor2.getDistance();
+
             }
         }
 
@@ -53,16 +47,6 @@ public class DriveTrain extends Subsystems{
 
     };
 
-    // add Gyro here
-
-    public enum DriveState {
-        BRAKE, 
-        STOP,
-        TELEOP, 
-        AUTO
-    }
-
-    private DriveState state = DriveState.STOP; 
     public static DriveTrain driveTrainInstance = null;
 
     private void configureMaster(TalonSRX talon, boolean left) {
@@ -93,10 +77,6 @@ public class DriveTrain extends Subsystems{
      
         victor2 = VictorSPXFactory.createPermanentSlaveVictor(Constants.DRIVE_TRAIN_MTR_RIGHT_BACK, Constants.DRIVE_TRAIN_MTR_RIGHT_FRONT);
         victor2.setInverted(true);
-    }
-
-    public DriveState getState(){
-        return state;
     }
 
     public static DriveTrain getInstance(){
@@ -142,40 +122,4 @@ public class DriveTrain extends Subsystems{
         talon1.setNeutralMode(NeutralMode.Coast);
         talon2.setNeutralMode(NeutralMode.Coast);
     }
-
-    public void changeState(DriveState state){
-        this.state = state;
-    }
-
-    public double getUltrasonicDistance1(){
-        return distance1;
-    }
-
-    public double getUltrasonicDistance2(){
-        return distance2;
-    }
-
-
-    /*
-    If offset < 0, then too far to left
-    If offset > 0, then too far to right
-
-    */
-    public double getDistanceOffset(){
-        return distance1 - distance2;
-    }
-
-    public double getAngleOffset(){
-        return Math.atan(getDistanceOffset() * Constants.ULTRASONIC_SENSOR_DISTANCE);
-    }
 }
-
-/*
-alignment of drive base: 
-1. check for vision tape
-2. 
-
-
-
-*/
-

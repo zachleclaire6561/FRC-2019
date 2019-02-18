@@ -62,10 +62,10 @@ public class Elevator extends Subsystems {
     };
 
     public enum ElevatorState{
-        BRAKE, 
-        MOVING, 
-        RESET, 
-        BOTTOM
+      BRAKE, 
+      MOVING, 
+      RESET, 
+      BOTTOM
     }
 
     private static Elevator elevatorInstance = null;
@@ -109,6 +109,7 @@ public class Elevator extends Subsystems {
 
     @Override 
     public void stop(){
+        
     }
     
     @Override 

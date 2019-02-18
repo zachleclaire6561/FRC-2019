@@ -11,14 +11,17 @@ import frc.robot.subsystems.*;
 import frc.robot.controls.controllers.*;
 import frc.robot.loops.Looper;
 
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.AnalogInput;
 
 public class Robot extends TimedRobot {
 
   private Superstructure superstruct = Superstructure.getInstance();
-  private Looper loops = new Looper(); 
+  private DriveTrain driveBase = DriveTrain.getInstance();
+  private Elevator elevator = Elevator.getInstance();
+  private Forklift forklift = Forklift.getInstance();
+  private Intake intake = Intake.getInstance();
+  private Looper looper = new Looper(); 
 
 
   private XBox xbox = new XBox(Constants.XBOX_PORT);
@@ -32,12 +35,15 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-
+    looper.start();
   }
 
   @Override
   public void autonomousPeriodic() {
-
+    driveTrainPeriodic();
+    elevatorPeriodic();
+    intakePeriodic();
+    forkliftPeriodic();
   }
 
   @Override
@@ -63,7 +69,11 @@ public class Robot extends TimedRobot {
   }
 
   public void registerLooper(){
-    superstruct.registerLoops(loops);
+      superstruct.registerLoop(looper);
+      driveBase.registerLoop(looper);
+      elevator.registerLoop(looper);
+      forklift.registerLoop(looper);
+      intake.registerLoop(looper);
   }
 
   public void driveTrainPeriodic(){
@@ -71,20 +81,25 @@ public class Robot extends TimedRobot {
   }
 
   public void elevatorPeriodic(){
-
+    
   }
 
   public void intakePeriodic(){
     if(xbox.getLeftTrigger() > 0.4){
-      superstruct.setIntakeRollers(Constants.INTAKE_MOTOR_SPEED);
+      superstruct.setIntakeRollers(0.6);
     }
     if(xbox.getButtonBNewPress()){
-      superstruct.reverseIntakeState();
+      superstruct.reverseIntake();
     }
   }
 
   public void forkliftPeriodic(){
-    
+    if(xbox.getRightTrigger() > 0.4){
+      superstruct.setForkliftRollers(0.6);
+    }
+    if(xbox.getButtonANewPress()){
+      superstruct.reverseForklift();
+    }
   }
 
 }

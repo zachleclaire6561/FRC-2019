@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Looper implements ILooper{
 
-    public final double kPeriod = Constants.kLooperDt;
+    public final double kPeriod = 0.1;
 
     private boolean running_;
 
@@ -26,11 +26,9 @@ public class Looper implements ILooper{
             synchronized (taskRunningLock_) {
                 if (running_) {
                     double now = Timer.getFPGATimestamp();
-
                     for (Loop loop : loops_) {
                         loop.onLoop(now);
                     }
-
                     dt_ = now - timestamp_;
                     timestamp_ = now;
                 }

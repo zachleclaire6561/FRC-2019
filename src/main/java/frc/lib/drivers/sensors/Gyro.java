@@ -24,6 +24,7 @@ public class Gyro{
         return gyro.isCalibrating();
     }
 
-
-
+    public boolean Connected(){
+        return gyro.isConnected();
+    }
 }

@@ -17,11 +17,8 @@ public class Intake extends Subsystems{
     double kP = 1.0;
     double kI = 0.0;
     double kD = 0.0;
-
-    private PID pid = new PID(kP, kD, kI);
     
     public IntakeState intakeState;
-
 
     public enum IntakeState{
         OUT,
@@ -34,7 +31,7 @@ public class Intake extends Subsystems{
         @Override 
         public void onStart(double timeStamp){
             synchronized(Intake.this){
-                pid.setRange(-1,1);
+                
             }
         }
 
@@ -101,6 +98,15 @@ public class Intake extends Subsystems{
             intakeState = IntakeState.IN;
         }
     } 
+
+    public void reverseIntakeState(){
+        if(intakeState == IntakeState.IN){
+            setState(false);
+        }
+        else{
+            setState(true);
+        }
+    }
 
     public IntakeState getState(){
         return intakeState;

@@ -1,13 +1,12 @@
 package frc.robot.subsystems;
 
 import frc.robot.loops.Looper;
-import frc.robot.subsystems.DriveTrain.DriveState;
 import frc.robot.subsystems.Elevator.ElevatorState;
 import frc.robot.loops.Loop;
 import frc.lib.drivers.sensors.Gyro;
 import frc.lib.math.PID;
 import frc.robot.Constants;
-
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Timer;
 
 
@@ -19,20 +18,26 @@ public class Superstructure extends Subsystems{
     private Intake intake = Intake.getInstance();
     private static Superstructure superstructureInstance = null;
 
-    private boolean intakeState = false;
-
     private double kP = 0.0;
     private double kI = 0.0;
     private double kD = 0.0;
 
-    private PID pidDrive = new PID(kP, kI, kD);
-    private Gyro gyro = new Gyro();
+    private PID pidDrive = new PID(kP, kI, kD); // PID controller for auto align
+    private static Gyro gyro = new Gyro();
+
+    Compressor compressor = new Compressor();
 
     public Loop loop = new Loop(){
         @Override 
         public void onStart(double timeStamp){
             synchronized(Superstructure.this){
-
+                if(gyro.Connected()){
+                    // display connection
+                }
+                else{
+                    // display not connected
+                }
+                compressor.setClosedLoopControl(true);
             }
         }
 
@@ -52,15 +57,15 @@ public class Superstructure extends Subsystems{
 
     };
 
-    public Superstructure(){
-
-    }
-
     public static Superstructure getInstance(){
         if(superstructureInstance == null){
             superstructureInstance = new Superstructure();
         }
         return superstructureInstance;
+    }
+
+    public Gyro getGyroInstance(){
+        return gyro;
     }
 
     @Override
@@ -70,10 +75,7 @@ public class Superstructure extends Subsystems{
 
     @Override
     public void stop(){
-        driveBase.stop();
-        elevator.stop();
-        forklift.stop();
-        intake.stop();
+        compressor.setClosedLoopControl(false);
     }
 
     @Override
@@ -94,94 +96,61 @@ public class Superstructure extends Subsystems{
 
     }
 
-    public void registerLoops(Looper looper){
-        registerLoop(looper);
-        driveBase.registerLoop(looper);
-        elevator.registerLoop(looper);
-        forklift.registerLoop(looper);
-        intake.registerLoop(looper);
-    }
+   
 
     /*
     Robot Subsystems
 
     */
 
-    public void tankDrive(double x1, double x2){
-       synchronized(Superstructure.this){
-           if(driveBase.getState() == DriveTrain.DriveState.TELEOP){
+    public void tankDrive(double x1, double x2){  
               driveBase.tankDrive(x1,x2);
-           }
-        }
-    }
-
-    public void autoAlign(){
-        synchronized(Superstructure.this){
-            if(driveBase.getState() == DriveTrain.DriveState.AUTO){
-                if(driveBase.getAngleOffset() > min){ // insert some value here
-                    double pow = pidDrive.calculate(driveBase.getAngleOffset());
-                    tankDrive(pow, -pow);
-                }
-            }
-        }
-    }
-
-    public void autoDriveStraight(double magnitude){
-        synchronized(Superstructure.this){
-            if(driveBase.getState() == DriveTrain.DriveState.AUTO){
-                tankDrive(magnitude, magnitude);
-            }
-        }
-    }
-
-    public void toAutoAlign(){
-        driveBase.changeState(DriveState.AUTO);
-    }
-
-    public void toTeleopControl(){
-        driveBase.changeState(DriveState.TELEOP);
     }
 
     public void elevatorControl(int pos){
         // store heights as static constants in Constants.java 
         switch(pos){
             case 1:
-              resetElevator();
+            if(checkIntakeSafety()){
+              resetElevator(); // goes to bottom
+            }
+            else{
+                // alert unsafety
+            }
             break;
 
             case 2: 
-              setElevatorHeight();  // 
+            if(checkIntakeSafety()){
+              setElevatorHeight(Constants.Elevator_Height_LVL1_DISK);  // lvl 1 disk
+            }
+            else{
+                // alert unsafety
+            }
             break;
 
             case 3:
-              setElevatorHeight();  // 
+              setElevatorHeight(Constants.Elevator_Height_LVL2_DISK);  // lvl 2 disk
             break;
 
             case 4: 
-              setElevatorHeight();  // 
+              setElevatorHeight(Constants.Elevator_Height_LVL3_DISK);  // lvl 3 disk
             break;
 
             case 5: 
-              setElevatorHeight();  // 
+              setElevatorHeight(Constants.Elevator_Height_LVL1_BALL);  // lvl 1 ball
             break;
 
             case 6: 
-              setElevatorHeight();  // 
+              setElevatorHeight(Constants.Elevator_Height_LVL2_BALL);  // lvl 2 ball
             break;
+
+            case 7:
+                setElevatorHeight(Constants.Elevator_Height_LVL3_BALL); // lvl 3 ball 
         }
     }
 
     public boolean checkIntakeSafety(){
         return (intake.getState() == Intake.IntakeState.IN);
-    }
-
-    public void setIntakeState(boolean out){
-        intake.setState(out);
-    }
-
-    public void reverseIntakeState(){
-        setIntakeState(intakeState);
-        intakeState = !intakeState;
     }
 
     public void setIntakeRollers(double power){
@@ -192,8 +161,8 @@ public class Superstructure extends Subsystems{
         forklift.setMotorSpeed(power);
     }
 
-    public void setForkliftAngle(double angle){
-        forklift.setServoAngle(angle);
+    public void setForkliftServoPower(double pow){
+        forklift.setServoSpeed(pow);
     }
 
     public void setElevatorHeight(double height){
@@ -202,6 +171,14 @@ public class Superstructure extends Subsystems{
 
     public void resetElevator(){
         elevator.resetHeight();
+    }
+
+    public void reverseIntake(){
+        intake.reverseIntakeState();
+    }
+
+    public void reverseForklift(){
+        forklift.reverseForkliftAngle();
     }
 
     /*

@@ -18,23 +18,35 @@ public class Forklift extends Subsystems{
     private Spark sparky = new Spark(Constants.FORKLIFT_MTR);
     private Servo servo = new Servo(Constants.FORKLIFT_SERVO);
     private static Forklift forkliftInstance = null;
+    private forkLiftState forkliftState = forkLiftState.UP;
 
     public enum forkLiftState{
-        
+        DOWN,
+        UP
     }
 
     public Loop loop = new Loop(){
         @Override 
         public void onStart(double timeStamp){
             synchronized(Forklift.this){
-                servo.set(Constants.FORKLIFT_SERVO_POWER);
             }
         }
 
         @Override 
         public void onLoop(double timeStamp){
             synchronized(Forklift.this){
-
+                double angle = getServoAngle();
+                if(forkliftState == forkLiftState.DOWN){
+                    setMotorSpeed((180 - angle)/180);
+                }
+                else{
+                    if(angle < 109){
+                        setMotorSpeed(Constants.FORKLIFT_SERVO_POWER);
+                    }
+                    else{
+                        setMotorSpeed((angle-110)/70);
+                    }
+                }
             }
         }
 
@@ -93,5 +105,16 @@ public class Forklift extends Subsystems{
 
     public double getServoAngle(){
         return servo.getAngle();
+    }
+
+    public void reverseForkliftAngle(){
+        if(forkliftState == forkLiftState.UP){
+            setServoAngle(180);
+            forkliftState = forkLiftState.DOWN;
+        }
+        else{
+            setServoAngle(107);
+            forkliftState = forkLiftState.UP;
+        }
     }
 }

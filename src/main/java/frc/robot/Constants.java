@@ -45,17 +45,20 @@ public class Constants{
     public static final double INTAKE_VOLTAGE_RAMP_RATE = 10;
     public static final int kLooperDt = 100;
 
-    public static final double FORKLIFT_SERVO_POWER = 0.4;
-    public static final double INTAKE_MOTOR_SPEED = 0.6;
+    public static final double FORKLIFT_SERVO_POWER = 0.4; // min power needed to keep servo up 
 
     public static final double ULTRASONIC_SENSOR_DISTANCE = 0; // calibrate
 
 
     /*
-    PID constants for elevator
+      Heights for elevator
     */ 
 
-   
-    
+    public static final double Elevator_Height_LVL1_DISK = 0;
+    public static final double Elevator_Height_LVL2_DISK = 0;
+    public static final double Elevator_Height_LVL3_DISK = 0;
+    public static final double Elevator_Height_LVL1_BALL = 0;
+    public static final double Elevator_Height_LVL2_BALL = 0;
+    public static final double Elevator_Height_LVL3_BALL = 0;
 
 }
