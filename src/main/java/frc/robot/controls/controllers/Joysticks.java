@@ -27,4 +27,33 @@ public class Joysticks{
     public double getY2(){
         return joystick2.getY();
     }
+
+    public double getZ2(){
+        return joystick2.getZ();
+    }
+
+    public boolean getTrigger2(){
+        return joystick2.getTrigger();
+    }
+
+    public double getAngle2(){
+        double angle = 0;
+        double x = getX2();
+        double y = getY2();
+        angle = Math.atan(y/x);
+            if(x > 0 && y > 0){
+                angle = Math.atan(y/x);
+            }
+            if(x < 0 && y < 0){
+                angle = 180 + Math.atan(y/x);
+            }
+            if(x > 0 && y < 0){
+                angle = 270 + Math.atan(-y/x);
+            }
+            if(x < 0 && y > 0){
+                angle = 90 + Math.atan(-y/x);
+            }
+        return angle;
+    }
+
 }

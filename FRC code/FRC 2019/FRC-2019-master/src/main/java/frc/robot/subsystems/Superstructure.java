@@ -176,4 +176,13 @@ public class Superstructure extends Subsystems{
         return true;
     }
 
+    public void elvState(boolean state){
+        if(state){
+            elevator.setHeight(10,000);
+        }
+        else{
+            elevator.setHeight(0);
+        }
+    }
+
 }

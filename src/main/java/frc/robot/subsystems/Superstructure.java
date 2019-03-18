@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import frc.robot.loops.Looper;
 import frc.robot.subsystems.Elevator.ElevatorState;
 import frc.robot.loops.Loop;
-import frc.lib.drivers.sensors.Gyro;
 import frc.lib.math.PID;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.Compressor;
@@ -23,7 +22,6 @@ public class Superstructure extends Subsystems{
     private double kD = 0.0;
 
     private PID pidDrive = new PID(kP, kI, kD); // PID controller for auto align
-    private static Gyro gyro = new Gyro();
 
     Compressor compressor = new Compressor();
 
@@ -62,10 +60,6 @@ public class Superstructure extends Subsystems{
             superstructureInstance = new Superstructure();
         }
         return superstructureInstance;
-    }
-
-    public Gyro getGyroInstance(){
-        return gyro;
     }
 
     @Override
@@ -107,46 +101,13 @@ public class Superstructure extends Subsystems{
               driveBase.tankDrive(x1,x2);
     }
 
-    public void elevatorControl(int pos){
+    public void curveDrive(double throttle, double turn, boolean isQuickTurn){
+        driveBase.curvatureDrive(throttle, turn , isQuickTurn);
+    }
+
+    public void elevatorControl(int pos, boolean isTop){
         // store heights as static constants in Constants.java 
-        switch(pos){
-            case 1:
-            if(checkIntakeSafety()){
-              resetElevator(); // goes to bottom
-            }
-            else{
-                // alert unsafety
-            }
-            break;
-
-            case 2: 
-            if(checkIntakeSafety()){
-              setElevatorHeight(Constants.Elevator_Height_LVL1_DISK);  // lvl 1 disk
-            }
-            else{
-                // alert unsafety
-            }
-            break;
-
-            case 3:
-              setElevatorHeight(Constants.Elevator_Height_LVL2_DISK);  // lvl 2 disk
-            break;
-
-            case 4: 
-              setElevatorHeight(Constants.Elevator_Height_LVL3_DISK);  // lvl 3 disk
-            break;
-
-            case 5: 
-              setElevatorHeight(Constants.Elevator_Height_LVL1_BALL);  // lvl 1 ball
-            break;
-
-            case 6: 
-              setElevatorHeight(Constants.Elevator_Height_LVL2_BALL);  // lvl 2 ball
-            break;
-
-            case 7:
-                setElevatorHeight(Constants.Elevator_Height_LVL3_BALL); // lvl 3 ball 
-        }
+        
     }
 
     public boolean checkIntakeSafety(){

@@ -118,7 +118,8 @@ public class Robot extends TimedRobot {
       superstruct.releaseBrake();
     }
     */
-    elevator.setPower(-1*xbox.getLeftY());
+  // elevator.setPower(-1*xbox.getLeftY());
+  
   }
 
   public void intakePeriodic(){

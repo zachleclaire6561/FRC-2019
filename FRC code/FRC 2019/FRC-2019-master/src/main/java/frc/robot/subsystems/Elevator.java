@@ -1,12 +1,11 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
+import frc.lib.math.PID;
 import frc.lib.drivers.motorcontrollers.*;
-import frc.lib.drivers.sensors.BannerSensor;
+import frc.lib.drivers.sensors.BannerSenor;
 import frc.robot.loops.Looper;
 import frc.robot.loops.Loop;
-
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -16,47 +15,18 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.ErrorCode;
 
 public class Elevator extends Subsystems {
+    private double height;
+    private double lastHeight = 0;
+
+    private double goalHeight;
+
+    
     private TalonSRX talon1;
     private TalonSRX talon2;
-    private DoubleSolenoid brakePiston = new DoubleSolenoid(2, 3);
-    private BannerSensor Bannersensor = new BannerSensor(9);
+    private BannerSenor sensor = new BannerSensor(Constants.LIMIT_SWITCH_1);
 
-    private ElevatorState wantedState  = ElevatorState.BOTTOM;
-    private ElevatorState currentState = ElevatorState.BOTTOM;
 
-    private double timeSinceEngaged = 0;
-
-    public enum ElevatorState{
-     BOTTOM, 
-     D1, 
-     D2, 
-     D3, 
-     B1, 
-     B2, 
-     B3, 
-     MAX
-    }
-
-    public void incrimentState()
-    {
-        if(wantedState != ElevatorState.MAX){
-            int index = wantedState.ordinal();
-            int nextIndex = index + 1;
-            ElevatorState[] cars = ElevatorState.values();
-            nextIndex %= cars.length;
-            wantedState = cars[nextIndex];
-        }
-    }
-
-    public void decrimentState(){
-        if(wantedState != ElevatorState.BOTTOM){
-            int index = wantedState.ordinal();
-            int nextIndex = index - 1;//index + 1... Kanishk
-            ElevatorState[] cars = ElevatorState.values();
-            nextIndex %= cars.length;
-            wantedState = cars[nextIndex];
-        }
-    }
+    // limit switch
 
     public Loop loop = new Loop(){
         @Override 
@@ -69,8 +39,6 @@ public class Elevator extends Subsystems {
         @Override 
         public void onLoop(double timeStamp){
             synchronized(Elevator.this){
-                updatePosition(timeStamp);
-                updatePower();
 
             }
         }
@@ -107,8 +75,6 @@ public class Elevator extends Subsystems {
         configureMaster(talon1);
 
         talon2 = TalonSRXFactory.createPermanentSlaveTalon(Constants.ELEVATOR_MTR_2, Constants.ELEVATOR_MTR_1);
-        talon2.follow(talon1);
-
     }
 
     public static Elevator getInstance(){
@@ -120,8 +86,8 @@ public class Elevator extends Subsystems {
 
     @Override 
     public void zeroSensors(){
+        height = 0;
         talon1.setSelectedSensorPosition(0, 0, 0);
-       
     }
 
     @Override 
@@ -139,90 +105,23 @@ public class Elevator extends Subsystems {
 
     }
 
-    public synchronized void updatePosition(double timeStamp){
-        if(wantedState == currentState){
-            if(timeStamp - timeSinceEngaged > 0.5){
-                if(Bannersensor.seesTape() && wantedState == ElevatorState.BOTTOM){
-                    zeroSensors();
-                }
-                timeSinceEngaged = timeStamp;
-                engageBrake();
-            }
-            else{
-
-            }
-        } 
-        else{
-            if(timeStamp - timeSinceEngaged > 0.5){
-                timeSinceEngaged = timeStamp;
-                releaseBrake();//Kanishk
-                updatePower();
-            }
+    public void updatePosition(){
+        if((lastHeight > height) && sensor.seesTape()){
+           talon1.set(ControlMode.PercentOutput, 0);
         }
+        zeroSensors();
     }
 
-    public synchronized void setHeight(ElevatorState state) {
-        wantedState = state;
+    public synchronized void setHeight(double kHeight) {
+        lastHeight = goalHeight;
+        goalHeight = kHeight;
     }
 
-    public void engageBrake(){
-        brakePiston.set(DoubleSolenoid.Value.kForward);
-    }
-
-    public void releaseBrake(){
-        brakePiston.set(DoubleSolenoid.Value.kReverse);
-    }
-    
-    public void updatePower(){//Kanishk
-        double pow = (0.9)*getDistanceFromPoint(wantedState);//Kp == 0.9
-        talon1.set(ControlMode.PercentOutput, pow);
-        talon2.set(ControlMode.PercentOutput, pow);
-    }
-
-    public void setPower(double pow){
-        if(Bannersensor.seesTape()){
-        talon1.set(ControlMode.PercentOutput, pow);
-        talon2.set(ControlMode.PercentOutput, pow);
-        }
-    }
-
-    public boolean getBanner(){
-        return Bannersensor.seesTape();
-    }
-
-    public double getDistanceFromPoint(ElevatorState state){
-        double height = 0;
-        double distance = getEncoderValue();
-        if(state == ElevatorState.D1){
-         //   height = // insert Disk 1 height
-        }
-        if(state == ElevatorState.D2){
-        //    height = //insert Disk 2 height
-        }
-        if(state == ElevatorState.D3){
-        //    height = // insert Disk 3 height
-        //YO ROBOT... FUCKING WORK
-        }
-        if(state == ElevatorState.B1){
-        //    height = // insert Ball 1 height
-        }
-        if(state == ElevatorState.B2){
-        //    height = // insert Ball 2 height
-        }
-        if(state == ElevatorState.B3){
-        //    height = // insert Ball 3 height
-        }
-        if(state == ElevatorState.MAX){
-            height = 20500;
-        }
-        return height-distance;
-    }
-
-    public double getEncoderValue(){
-        return talon1.getSelectedSensorPosition(0);
-    }
-
-    public double getElevatorSpeed(){
+    public double getRawVelocity() {
         return talon1.getSelectedSensorVelocity(0);
+    }
+
+    public double getRawPosition() {
+        return  talon1.getSelectedSensorPosition(0);
     }
 }

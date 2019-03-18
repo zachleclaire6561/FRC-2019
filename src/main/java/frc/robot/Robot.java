@@ -77,7 +77,13 @@ public class Robot extends TimedRobot {
   }
 
   public void driveTrainPeriodic(){
-    superstruct.tankDrive(joysticks.getY1(), joysticks.getY2());
+   // superstruct.tankDrive(joysticks.getY1(), joysticks.getY2());
+   if(joystick.getTrigger2()){
+   superstruct.curveDrive(joysticks.getY1(), joysticks);
+   }
+   else{
+     superstruct.curveDrive(joysticks.get);
+   }
   }
 
   public void elevatorPeriodic(){

@@ -21,16 +21,7 @@ public class Elevator extends Subsystems {
     
     private TalonSRX talon1;
     private TalonSRX talon2;
-    private LimitSwitch lim1 = new LimitSwitch(Constants.LIMIT_SWITCH_1);;
-
-    public double kP = 0;
-    public double kI = 0;
-    public double kD = 0;
-
-    public double tolerance = 1; 
-
-    private PID pidHeightController = new PID(kP, kI, kD);
-    private ElevatorState elvState = ElevatorState.RESET;
+    private LimitSwitch lim1 = new LimitSwitch(Constants.LIMIT_SWITCH_1);
 
 
     // limit switch
@@ -46,9 +37,7 @@ public class Elevator extends Subsystems {
         @Override 
         public void onLoop(double timeStamp){
             synchronized(Elevator.this){
-                updatePosition();
-                updateBrake();
-                height = getHeight();
+
             }
         }
 
@@ -60,13 +49,6 @@ public class Elevator extends Subsystems {
         }
 
     };
-
-    public enum ElevatorState{
-      BRAKE, 
-      MOVING, 
-      RESET, 
-      BOTTOM
-    }
 
     private static Elevator elevatorInstance = null;
 
@@ -104,7 +86,6 @@ public class Elevator extends Subsystems {
     public void zeroSensors(){
         height = 0;
         talon1.setSelectedSensorPosition(0, 0, 0);
-        pidHeightController.resetIntegrator();
     }
 
     @Override 
@@ -123,30 +104,15 @@ public class Elevator extends Subsystems {
     }
 
     public void updatePosition(){
-        if( elvState != ElevatorState.BRAKE)
-            talon1.set(ControlMode.PercentOutput, pidHeightController.calculate(height));
-    }
-
-    public void updateBrake(){
-        if(pidHeightController.onTarget(tolerance))
-            elvState = ElevatorState.BRAKE;
+            talon1.set(ControlMode.Position, goalHeight);
     }
 
     public synchronized void setHeight(double kHeight) {
         goalHeight = kHeight;
-        pidHeightController.setSetPoint(goalHeight);
     }
 
     public synchronized void resetHeight(){
-        if(! lim1.get() && elvState != ElevatorState.BOTTOM){
-            setHeight(-0.5);
-            elvState = ElevatorState.RESET;
-        }
-        else{
-            elvState = ElevatorState.BOTTOM;
-            height = 0;
-            zeroSensors();
-        }
+
     }
 
     //Accessors
@@ -159,15 +125,8 @@ public class Elevator extends Subsystems {
         return  talon1.getSelectedSensorPosition(0);
     }
 
-    public double getHeight(){
-        return getRawPosition() * Constants.ELEVATOR_TICKS_TO_DISTANCE;
-    }
-
-    public double getVelocity(){
-       return getRawVelocity() * Constants.ELEVATOR_TICKS_TO_DISTANCE;
-    }
-
     public boolean getZeroSwitch(){
         return lim1.get();
     }
+
 }

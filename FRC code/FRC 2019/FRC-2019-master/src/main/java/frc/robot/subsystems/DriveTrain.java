@@ -6,7 +6,9 @@ import frc.lib.drivers.motorcontrollers.VictorSPXFactory;
 import frc.robot.loops.Looper;
 import frc.robot.loops.Loop;
 import frc.robot.Constants;
+import frc.robot.controls.DriveBase.*;
 
+import frc.lib.drivers.sensors.Gyro;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
@@ -22,6 +24,9 @@ public class DriveTrain extends Subsystems{
     private TalonSRX talon2;
     private VictorSPX victor1;
     private VictorSPX victor2;
+    private Gyro gyro = new Gyro();
+    private DriveSignal signal;
+    private RaginDrive drive = new RaginDrive();
 
     public Loop loop = new Loop(){
         @Override 
@@ -121,5 +126,11 @@ public class DriveTrain extends Subsystems{
     public synchronized void coast(){
         talon1.setNeutralMode(NeutralMode.Coast);
         talon2.setNeutralMode(NeutralMode.Coast);
+    }
+
+    public void curvatureDrive(double throttle, double wheel, boolean isQuickTurn){
+        signal = drive.cheesyDrive(throttle, wheel, isQuickTurn, true);
+        talon1.set(ControlMode.PercentOutput, signal.getLeft());
+        talon2.set(ControlMode.PercentOutput, signal.getRight());
     }
 }
