@@ -27,4 +27,8 @@ public class Joysticks{
     public double getY2(){
         return joystick2.getY();
     }
+
+    public double getThrottle1(){
+        return Math.min(joystick1.getThrottle(), 1.0);
+    }
 }

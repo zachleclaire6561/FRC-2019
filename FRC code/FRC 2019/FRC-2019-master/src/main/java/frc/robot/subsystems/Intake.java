@@ -22,11 +22,6 @@ public class Intake extends Subsystems{
     
     public IntakeState intakeState;
 
-    public enum IntakeState{
-        OUT,
-        IN
-    }
-
     private static Intake intakeInstance= null;
 
     public Loop loop = new Loop(){

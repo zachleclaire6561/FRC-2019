@@ -105,9 +105,9 @@ public class Superstructure extends Subsystems{
               driveBase.tankDrive(x1,x2);
     }
 
-    /*public boolean checkIntakeSafety(){
+    public boolean checkIntakeSafety(){
         return (intake.getState() == Intake.IntakeState.IN);
-    }*/
+    }
 
     public void setIntakeRollers(double power){
         intake.set(power);

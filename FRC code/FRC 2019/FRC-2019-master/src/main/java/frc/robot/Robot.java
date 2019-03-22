@@ -91,34 +91,25 @@ public class Robot extends TimedRobot {
   }
 
   public void driveTrainPeriodic(){
-    superstruct.tankDrive(-joysticks.getY1(), -joysticks.getY2());
+    //superstruct.tankDrive(-joysticks.getY1(), -joysticks.getY2());
+    superstruct.curveDrive(joysticks.getY1(), joysticks.getX2(), (joysticks.getZ2>0.3));
   }
 
-  /*
-    instructions: 
-    - get rocket heights (in encoder units) for robot 1 encoder rotation = 7.8 in 
-    - calibrate P controller ()
-    - un-comment the code bellow and comment the setPower thingy
-    - test if overall code works
-  */
+  // Taken: Y/A (elevator), B(intake), X(elevator manual) + Y-Left, right/left triggers
+  // remaining: 
   public void elevatorPeriodic(){
-    /*
-    if(xbox.getBack()){
-      superstruct.toMax();
+
+    // uses encoder values
+    if(xbox.getButtonYNewPress()){
+      superstructure.toCargo();
     }
-    else if(xbox.getStart()){
-      superstruct.Reset();
+    else if(xbox.getButtonANewPress()){
+      superstructure.toBottom();
     }
-    else if(xbox.getRightBumper()){
-      //superstruct.incrimentHeight();
-      superstruct.engageBrake();
+    // manual control
+    if(xbox.getButtonX()){
+      elevator.setPower(-1*xbox.getLeftY());
     }
-    else if(xbox.getLeftBumper()){
-      //superstruct.decrimentHeight();
-      superstruct.releaseBrake();
-    }
-    */
-  // elevator.setPower(-1*xbox.getLeftY());
   
   }
 
@@ -151,10 +142,10 @@ public class Robot extends TimedRobot {
 
   
   public void climberPeriodic(){
-    if(xbox.getRightY()>0.3){
+    if(xbox.getRightBumper()){
       superstruct.runClimber();
     }
-    else if(xbox.getRightY()<-0.3){
+    else if(xbox.getLeftBumper()){
       superstruct.reverseClimber();
     }
     else{
