@@ -8,10 +8,9 @@ import frc.robot.loops.Loop;
 import frc.robot.Constants;
 import frc.robot.controls.DriveBase.*;
 
-import frc.lib.drivers.sensors.Gyro;
+//import frc.lib.drivers.sensors.Gyro;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import com.kauailabs.navx.frc.AHRS;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod;
@@ -24,7 +23,7 @@ public class DriveTrain extends Subsystems{
     private TalonSRX talon2;
     private VictorSPX victor1;
     private VictorSPX victor2;
-    private Gyro gyro = new Gyro();
+//    private Gyro gyro = new Gyro();
     private DriveSignal signal;
     private RaginDrive drive = new RaginDrive();
 

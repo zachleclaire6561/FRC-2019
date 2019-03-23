@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import frc.robot.loops.Looper;
-import frc.robot.subsystems.Elevator.ElevatorState;
 import frc.robot.loops.Loop;
 import frc.lib.math.PID;
 import frc.robot.Constants;
@@ -15,13 +14,15 @@ public class Superstructure extends Subsystems{
     private Elevator elevator = Elevator.getInstance();
     private Forklift forklift = Forklift.getInstance();
     private Intake intake = Intake.getInstance();
+    private Climber climber = Climber.getInstance();
+   // private Limelight vision = new Limelight.getInstance();
     private static Superstructure superstructureInstance = null;
 
     private double kP = 0.0;
-    private double kI = 0.0;
     private double kD = 0.0;
 
-    private PID pidDrive = new PID(kP, kI, kD); // PID controller for auto align
+   // private PID pidDrive = new PID(kP, kI, kD); // PID controller for auto align
+   // private static Gyro gyro = new Gyro();
 
     Compressor compressor = new Compressor();
 
@@ -29,12 +30,14 @@ public class Superstructure extends Subsystems{
         @Override 
         public void onStart(double timeStamp){
             synchronized(Superstructure.this){
+                /*
                 if(gyro.Connected()){
                     // display connection
                 }
                 else{
                     // display not connected
                 }
+                */
                 compressor.setClosedLoopControl(true);
             }
         }
@@ -61,6 +64,12 @@ public class Superstructure extends Subsystems{
         }
         return superstructureInstance;
     }
+
+    /*
+    public Gyro getGyroInstance(){
+        return gyro;
+    }
+   */ 
 
     @Override
     public void zeroSensors(){
@@ -90,24 +99,16 @@ public class Superstructure extends Subsystems{
 
     }
 
-   
-
     /*
     Robot Subsystems
-
     */
 
     public void tankDrive(double x1, double x2){  
               driveBase.tankDrive(x1,x2);
     }
 
-    public void curveDrive(double throttle, double turn, boolean isQuickTurn){
-        driveBase.curvatureDrive(throttle, turn , isQuickTurn);
-    }
-
-    public void elevatorControl(int pos, boolean isTop){
-        // store heights as static constants in Constants.java 
-        
+    public void curveDrive(double throttle, double wheel, boolean isQuickTurn){
+        driveBase.curvatureDrive(throttle, wheel, isQuickTurn);
     }
 
     public boolean checkIntakeSafety(){
@@ -118,7 +119,7 @@ public class Superstructure extends Subsystems{
         intake.set(power);
     }
 
-    public void setForkliftRollers(double power ){
+    public void setForkliftRollers(double power){
         forklift.setMotorSpeed(power);
     }
 
@@ -126,29 +127,79 @@ public class Superstructure extends Subsystems{
         forklift.setServoSpeed(pow);
     }
 
-    public void setElevatorHeight(double height){
-        elevator.setHeight(height);
-    }
-
-    public void resetElevator(){
-        elevator.resetHeight();
-    }
-
     public void reverseIntake(){
         intake.reverseIntakeState();
     }
 
+    /*
+    public void incrimentHeight(){
+       elevator.incrimentState();
+    }
+
+    public void decrimentHeight(){
+        elevator.decrimentState();
+    }
+    */
+/*
+    public void toMax(){
+        elevator.setHeight(ElevatorState.MAX);
+    }
+
+    
+    //Kanishk
+    public void engageBrake(){
+        elevator.engageBrake();
+    }
+
+    public void releaseBrake(){
+        elevator.releaseBrake();
+    }
+    //End
+    */
+/*
+    public void Reset(){
+        elevator.setHeight(ElevatorState.BOTTOM);
+    }
+*/
     public void reverseForklift(){
         forklift.reverseForkliftAngle();
+    }
+    
+    public void runClimber(){
+        climber.run();
+    }
+
+    public void reverseClimber(){
+        climber.reverse();
+    }
+
+    public void stopClimber(){
+        climber.stop();
     }
 
     /*
     Vision code
-
     */
 
     public boolean getVisionTape(){
         return true;
     }
 
+    public void elvState(boolean state){
+        if(state){
+            elevator.setHeight(10000);
+        }
+        else{
+            elevator.setHeight(0);
+        }
+    }
+
+    public void elevatorPow(double pow){
+        elevator.setPower(pow);
+    }
+/*
+    public double getAngleOffset(){
+        return 
+    }
+*/
 }

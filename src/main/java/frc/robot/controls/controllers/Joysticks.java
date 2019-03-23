@@ -36,6 +36,10 @@ public class Joysticks{
         return joystick2.getTrigger();
     }
 
+    public boolean getTrigger1(){
+        return joystick1.getTrigger();
+    }
+
     public double getAngle2(){
         double angle = 0;
         double x = getX2();

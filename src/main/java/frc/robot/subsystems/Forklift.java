@@ -35,18 +35,20 @@ public class Forklift extends Subsystems{
         @Override 
         public void onLoop(double timeStamp){
             synchronized(Forklift.this){
+                /*
                 double angle = getServoAngle();
                 if(forkliftState == forkLiftState.DOWN){
                     setMotorSpeed((180 - angle)/180);
                 }
                 else{
                     if(angle < 109){
-                        setMotorSpeed(Constants.FORKLIFT_SERVO_POWER);
+                    ///    setMotorSpeed(Constants.FORKLIFT_SERVO_POWER);
                     }
                     else{
                         setMotorSpeed((angle-110)/70);
                     }
                 }
+                */
             }
         }
 

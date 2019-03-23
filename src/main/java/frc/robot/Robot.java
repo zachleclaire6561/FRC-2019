@@ -14,6 +14,7 @@ import frc.robot.loops.Looper;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.AnalogInput;
 
+
 public class Robot extends TimedRobot {
 
   private Superstructure superstruct = Superstructure.getInstance();
@@ -26,6 +27,9 @@ public class Robot extends TimedRobot {
 
   private XBox xbox = new XBox(Constants.XBOX_PORT);
   private Joysticks joysticks = new Joysticks(Constants.JOYSTICK_PORT_1, Constants.JOYSTICK_PORT_2);
+
+
+
 
   @Override
   public void robotInit() {
@@ -57,6 +61,7 @@ public class Robot extends TimedRobot {
     elevatorPeriodic();
     intakePeriodic();
     forkliftPeriodic();
+   // visionPeriodic();
   }
 
   @Override
@@ -78,21 +83,43 @@ public class Robot extends TimedRobot {
 
   public void driveTrainPeriodic(){
    // superstruct.tankDrive(joysticks.getY1(), joysticks.getY2());
-   if(joystick.getTrigger2()){
+   /*  if(joystick.getTrigger2()){
    superstruct.curveDrive(joysticks.getY1(), joysticks);
    }
    else{
-     superstruct.curveDrive(joysticks.get);
+     superstruct.curveDrive(joysticks.getX1());
    }
-  }
+   */
+  if(!joysticks.getTrigger1())
+  superstruct.curveDrive(joysticks.getY1(), joysticks.getX1(), joysticks.getTrigger2());
+   else
+   superstruct.tankDrive(joysticks.getY1(), joysticks.getY2());
+}
+
+  
 
   public void elevatorPeriodic(){
+    
+    if(!xbox.getButtonX()){
+      if(xbox.getButtonANewPress()){
+        superstruct.elvState(false);
+      }
+      if(xbox.getButtonYNewPress()){
+        superstruct.elvState(true);
+      }
+  }
+  else{
+    superstruct.elevatorPow(xbox.getLeftY());
+  }
     
   }
 
   public void intakePeriodic(){
     if(xbox.getLeftTrigger() > 0.4){
       superstruct.setIntakeRollers(0.6);
+    }
+    else{
+      superstruct.setIntakeRollers(0.0);
     }
     if(xbox.getButtonBNewPress()){
       superstruct.reverseIntake();
@@ -103,9 +130,11 @@ public class Robot extends TimedRobot {
     if(xbox.getRightTrigger() > 0.4){
       superstruct.setForkliftRollers(0.6);
     }
+    else{
+      superstruct.setForkliftRollers(0.0);
+    }
     if(xbox.getButtonANewPress()){
       superstruct.reverseForklift();
     }
   }
-
 }

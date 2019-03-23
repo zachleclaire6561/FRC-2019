@@ -3,7 +3,7 @@ package frc.robot.subsystems;
 import frc.robot.Constants;
 import frc.lib.math.PID;
 import frc.lib.drivers.motorcontrollers.*;
-import frc.lib.drivers.sensors.LimitSwitch;
+import frc.lib.drivers.sensors.BannerSensor;
 import frc.robot.loops.Looper;
 import frc.robot.loops.Loop;
 
@@ -16,12 +16,13 @@ import com.ctre.phoenix.ErrorCode;
 
 public class Elevator extends Subsystems {
     private double height;
+    private double lastHeight = 0;
 
     private double goalHeight;
-    
+
     private TalonSRX talon1;
     private TalonSRX talon2;
-    private LimitSwitch lim1 = new LimitSwitch(Constants.LIMIT_SWITCH_1);
+    private BannerSensor sensor = new BannerSensor(Constants.LIMIT_SWITCH_1);
 
 
     // limit switch
@@ -104,18 +105,23 @@ public class Elevator extends Subsystems {
     }
 
     public void updatePosition(){
-            talon1.set(ControlMode.Position, goalHeight);
+        if((lastHeight > height) && sensor.seesTape()){
+           talon1.set(ControlMode.PercentOutput, 0);
+        }
+        else{
+            talon1.set(ControlMode.Position, height);
+        }
+        zeroSensors();
     }
 
     public synchronized void setHeight(double kHeight) {
+        lastHeight = goalHeight;
         goalHeight = kHeight;
     }
 
-    public synchronized void resetHeight(){
-
+    public void setPower(double pow){
+        talon1.set(ControlMode.PercentOutput, pow);
     }
-
-    //Accessors
 
     public double getRawVelocity() {
         return talon1.getSelectedSensorVelocity(0);
@@ -124,9 +130,4 @@ public class Elevator extends Subsystems {
     public double getRawPosition() {
         return  talon1.getSelectedSensorPosition(0);
     }
-
-    public boolean getZeroSwitch(){
-        return lim1.get();
-    }
-
 }
