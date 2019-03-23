@@ -108,7 +108,7 @@ public class Intake extends Subsystems{
             System.out.println("Intake is out");
             setState(true);
         }
-        
+
     }
 
     public IntakeState getState(){
