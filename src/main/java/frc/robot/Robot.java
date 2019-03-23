@@ -11,8 +11,11 @@ import frc.robot.subsystems.*;
 import frc.robot.controls.controllers.*;
 import frc.robot.loops.Looper;
 
+
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.cameraserver.CameraServer;
 
 
 public class Robot extends TimedRobot {
@@ -35,6 +38,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     AnalogInput.setGlobalSampleRate(62500);
     registerLooper();
+    CameraServer.getInstance().startAutomaticCapture(0);
+    CameraServer.getInstance().startAutomaticCapture(1);
   }
 
   @Override
@@ -90,27 +95,27 @@ public class Robot extends TimedRobot {
      superstruct.curveDrive(joysticks.getX1());
    }
    */
-  if(!joysticks.getTrigger1())
-    superstruct.curveDrive(joysticks.getY1(), joysticks.getX1(), joysticks.getTrigger2());
-  else
-   superstruct.tankDrive(joysticks.getY1(), joysticks.getY2());
+  //if(!joysticks.getTrigger1())
+    //superstruct.curveDrive(joysticks.getY1(), joysticks.getX1(), joysticks.getTrigger2());
+  //else
+   superstruct.tankDrive(-joysticks.getY1(), -joysticks.getY2());
 }
 
   
 
   public void elevatorPeriodic(){
     
-    if(!xbox.getButtonX()){
-      if(xbox.getButtonANewPress()){
-        superstruct.elvState(false);
-      }
-      if(xbox.getButtonYNewPress()){
-        superstruct.elvState(true);
-      }
-    }
-    else{
-      superstruct.elevatorPow(xbox.getLeftY());
-    }
+    // if(!xbox.getButtonX()){
+    //   if(xbox.getButtonANewPress()){
+    //     superstruct.elvState(false);
+    //   }
+    //   if(xbox.getButtonYNewPress()){
+    //     superstruct.elvState(true);
+    //   }
+    // }
+    // else{
+       superstruct.elevatorPow(xbox.getLeftY());
+    // }
   }
 
   public void intakePeriodic(){
@@ -121,6 +126,7 @@ public class Robot extends TimedRobot {
       superstruct.setIntakeRollers(0.0);
     }
     if(xbox.getButtonBNewPress()){
+      System.out.println("B button is being pressed");
       superstruct.reverseIntake();
     }
   }

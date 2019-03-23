@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj.SerialPort;
 public class Constants{
     
     //CAN ID's
-    public static final int DRIVE_TRAIN_MTR_LEFT_FRONT  = 0;
-    public static final int DRIVE_TRAIN_MTR_RIGHT_FRONT = 2;
-    public static final int DRIVE_TRAIN_MTR_LEFT_BACK   = 1;
-    public static final int DRIVE_TRAIN_MTR_RIGHT_BACK  = 3;
+    public static final int DRIVE_TRAIN_MTR_LEFT_FRONT  = 2;
+    public static final int DRIVE_TRAIN_MTR_RIGHT_FRONT = 1;
+    public static final int DRIVE_TRAIN_MTR_LEFT_BACK   = 3;
+    public static final int DRIVE_TRAIN_MTR_RIGHT_BACK  = 0;
     public static final int ELEVATOR_MTR_1              = 4; 
     public static final int ELEVATOR_MTR_2              = 5;
 

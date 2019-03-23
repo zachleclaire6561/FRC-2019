@@ -70,16 +70,16 @@ public class DriveTrain extends Subsystems{
     }
 
     public DriveTrain(){
-        talon1  = TalonSRXFactory.createDefaultTalon(Constants.DRIVE_TRAIN_MTR_LEFT_FRONT);
+        talon1  = TalonSRXFactory.createDefaultTalon(Constants.DRIVE_TRAIN_MTR_RIGHT_BACK);
         configureMaster(talon1, true);
 
-        victor1 = VictorSPXFactory.createPermanentSlaveVictor(Constants.DRIVE_TRAIN_MTR_LEFT_BACK, Constants.DRIVE_TRAIN_MTR_LEFT_FRONT);
+        victor1 = VictorSPXFactory.createPermanentSlaveVictor(Constants.DRIVE_TRAIN_MTR_RIGHT_FRONT, Constants.DRIVE_TRAIN_MTR_RIGHT_BACK);
         victor1.setInverted(false);
 
-        talon2  = TalonSRXFactory.createDefaultTalon(Constants.DRIVE_TRAIN_MTR_RIGHT_FRONT);
+        talon2  = TalonSRXFactory.createDefaultTalon(Constants.DRIVE_TRAIN_MTR_LEFT_BACK);
         configureMaster(talon1, false);
      
-        victor2 = VictorSPXFactory.createPermanentSlaveVictor(Constants.DRIVE_TRAIN_MTR_RIGHT_BACK, Constants.DRIVE_TRAIN_MTR_RIGHT_FRONT);
+        victor2 = VictorSPXFactory.createPermanentSlaveVictor(Constants.DRIVE_TRAIN_MTR_LEFT_FRONT, Constants.DRIVE_TRAIN_MTR_LEFT_BACK);
         victor2.setInverted(true);
     }
 

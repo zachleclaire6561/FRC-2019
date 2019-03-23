@@ -103,7 +103,7 @@ public class Intake extends Subsystems{
         if(intakeState == IntakeState.IN){
             setState(false);
         }
-        else{
+        else if(intakeState == IntakeState.OUT){
             setState(true);
         }
     }
