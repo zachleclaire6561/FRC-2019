@@ -62,6 +62,6 @@ public class Limelight extends Subsystems{
         if(state)
             NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
         else
-            NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);;
+            NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
     }
 }
