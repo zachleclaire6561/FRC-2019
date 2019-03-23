@@ -140,6 +140,7 @@ public class RaginDrive {
         return new DriveSignal(leftPwm, rightPwm);
     }
 
+    //Headband is to set a minimum on a value
     public double handleDeadband(double val, double deadband) {
         return (Math.abs(val) > Math.abs(deadband)) ? val : 0.0;
     }

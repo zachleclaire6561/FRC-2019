@@ -91,8 +91,8 @@ public class Robot extends TimedRobot {
    }
    */
   if(!joysticks.getTrigger1())
-  superstruct.curveDrive(joysticks.getY1(), joysticks.getX1(), joysticks.getTrigger2());
-   else
+    superstruct.curveDrive(joysticks.getY1(), joysticks.getX1(), joysticks.getTrigger2());
+  else
    superstruct.tankDrive(joysticks.getY1(), joysticks.getY2());
 }
 
@@ -107,11 +107,10 @@ public class Robot extends TimedRobot {
       if(xbox.getButtonYNewPress()){
         superstruct.elvState(true);
       }
-  }
-  else{
-    superstruct.elevatorPow(xbox.getLeftY());
-  }
-    
+    }
+    else{
+      superstruct.elevatorPow(xbox.getLeftY());
+    }
   }
 
   public void intakePeriodic(){
