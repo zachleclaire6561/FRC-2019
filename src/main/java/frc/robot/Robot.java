@@ -45,7 +45,8 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     looper.start();
-  }
+    intake.setState(false);
+    }
 
   @Override
   public void autonomousPeriodic() {
@@ -114,7 +115,7 @@ public class Robot extends TimedRobot {
     //   }
     // }
     // else{
-       superstruct.elevatorPow(xbox.getLeftY());
+       superstruct.elevatorPow(-xbox.getLeftY());
     // }
   }
 
@@ -129,6 +130,7 @@ public class Robot extends TimedRobot {
       System.out.println("B button is being pressed");
       superstruct.reverseIntake();
     }
+
   }
 
   public void forkliftPeriodic(){

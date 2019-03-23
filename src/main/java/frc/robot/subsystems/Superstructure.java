@@ -128,6 +128,7 @@ public class Superstructure extends Subsystems{
     }
 
     public void reverseIntake(){
+        System.out.println("Reverse Intake is being called");
         intake.reverseIntakeState();
     }
 

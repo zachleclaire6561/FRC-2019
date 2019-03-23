@@ -101,11 +101,14 @@ public class Intake extends Subsystems{
 
     public void reverseIntakeState(){
         if(intakeState == IntakeState.IN){
+            System.out.println("Intake is in");
             setState(false);
         }
         else if(intakeState == IntakeState.OUT){
+            System.out.println("Intake is out");
             setState(true);
         }
+        
     }
 
     public IntakeState getState(){
