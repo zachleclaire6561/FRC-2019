@@ -156,7 +156,7 @@ public class Robot extends TimedRobot {
     //  System.out.println("Left trigger is activated");
       //superstruct.setIntakeRollers(-0.6);
       superstruct.setForkliftRollers(1);
-      superstruct.setIntakeRollers(-0.6);
+      //superstruct.setIntakeRollers(-0.6);
     }
     else if(xbox.getButtonBNewPress()){
     //  System.out.println("B button is being pressed");
