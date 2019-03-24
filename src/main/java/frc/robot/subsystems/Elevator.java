@@ -121,6 +121,7 @@ public class Elevator extends Subsystems {
 
     public void setPower(double pow){
         talon1.set(ControlMode.PercentOutput, pow);
+        talon2.set(ControlMode.PercentOutput, pow);
     }
 
     public double getRawVelocity() {
