@@ -1,11 +1,15 @@
 package frc.robot.subsystems;
 
 import frc.robot.loops.Looper;
+import edu.wpi.first.wpilibj.Spark;
 import frc.robot.loops.Loop;
+
 
 public class Climber extends Subsystems{
 
     private static Climber climb = null;
+    Spark spark3 = new Spark(3);
+    Spark spark4 = new Spark(4);
 
 public Loop loop = new Loop(){
     @Override 
@@ -25,11 +29,18 @@ public Loop loop = new Loop(){
 };
 
 public void run(){
-
+    spark3.set(1);
+    spark4.set(1);
 }
 
 public void reverse(){
+    spark3.set(-0.5);
+    spark4.set(-0.5);
+}
 
+public void setToZero(){
+    spark3.set(0);
+    spark4.set(0);
 }
 
 public static Climber getInstance(){

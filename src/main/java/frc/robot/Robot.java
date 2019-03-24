@@ -12,7 +12,7 @@ import frc.robot.controls.controllers.*;
 import frc.robot.loops.Looper;
 
 
-
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.cameraserver.CameraServer;
@@ -24,8 +24,10 @@ public class Robot extends TimedRobot {
   private DriveTrain driveBase = DriveTrain.getInstance();
   private Elevator elevator = Elevator.getInstance();
   private Forklift forklift = Forklift.getInstance();
+  private Climber climber = Climber.getInstance();
   private Intake intake = Intake.getInstance();
   private Looper looper = new Looper(); 
+
 
 
   private XBox xbox = new XBox(Constants.XBOX_PORT);
@@ -52,6 +54,7 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     driveTrainPeriodic();
     elevatorPeriodic();
+    climberPeriodic();
     intakePeriodic();
     forkliftPeriodic();
   }
@@ -65,7 +68,8 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     driveTrainPeriodic();
     elevatorPeriodic();
-    intakePeriodic();
+    climberPeriodic();
+    //intakePeriodic();
     forkliftPeriodic();
    // visionPeriodic();
   }
@@ -85,6 +89,17 @@ public class Robot extends TimedRobot {
       elevator.registerLoop(looper);
       forklift.registerLoop(looper);
       intake.registerLoop(looper);
+  }
+ public void climberPeriodic(){
+    if(xbox.getButtonA()){
+  //    System.out.println("A is being pressed");
+      superstruct.reverseClimb();
+    }else if(xbox.getButtonX()){
+   //   System.out.println("X is being pressed");
+      superstruct.runClimb();
+    }else{
+      superstruct.climbOff();
+    }
   }
 
   public void driveTrainPeriodic(){
@@ -121,27 +136,34 @@ public class Robot extends TimedRobot {
 
   public void intakePeriodic(){
     if(xbox.getLeftTrigger() > 0.4){
-      superstruct.setIntakeRollers(0.6);
+     // System.out.println("Left trigger is activated");
+      //superstruct.setIntakeRollers(-0.6);
+      superstruct.setForkliftRollers(0.6);
     }
     else{
       superstruct.setIntakeRollers(0.0);
+      superstruct.setForkliftRollers(0.0);
     }
-    if(xbox.getButtonBNewPress()){
-      System.out.println("B button is being pressed");
-      superstruct.reverseIntake();
-    }
-
   }
 
   public void forkliftPeriodic(){
     if(xbox.getRightTrigger() > 0.4){
-      superstruct.setForkliftRollers(0.6);
+      superstruct.setForkliftRollers(-0.6);
+      superstruct.setIntakeRollers(0.6);
+    }
+    else if(xbox.getLeftTrigger() > 0.4){
+    //  System.out.println("Left trigger is activated");
+      //superstruct.setIntakeRollers(-0.6);
+      superstruct.setForkliftRollers(1);
+      superstruct.setIntakeRollers(-0.6);
+    }
+    else if(xbox.getButtonBNewPress()){
+    //  System.out.println("B button is being pressed");
+      superstruct.reverseIntake();
     }
     else{
       superstruct.setForkliftRollers(0.0);
-    }
-    if(xbox.getButtonANewPress()){
-      superstruct.reverseForklift();
+      superstruct.setIntakeRollers(0.0);
     }
   }
 }

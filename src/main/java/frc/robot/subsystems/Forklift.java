@@ -16,7 +16,7 @@ public class Forklift extends Subsystems{
  
     // limit switch code
     private Spark sparky = new Spark(Constants.FORKLIFT_MTR);
-    private Servo servo = new Servo(Constants.FORKLIFT_SERVO);
+    //private Servo servo = new Servo(Constants.FORKLIFT_SERVO);
     private static Forklift forkliftInstance = null;
     private forkLiftState forkliftState = forkLiftState.UP;
 
@@ -93,19 +93,19 @@ public class Forklift extends Subsystems{
         looper.register(loop);
     }
 
-    public void setServoAngle(double angle){
+    /*public void setServoAngle(double angle){
         servo.setAngle(angle);
     }
 
     public void setServoSpeed(double power){
         servo.set(power);
-    }
+    }*/
 
     public void setMotorSpeed(double power){
         sparky.set(power);
     }
 
-    public double getServoAngle(){
+    /*public double getServoAngle(){
         return servo.getAngle();
     }
 
@@ -118,5 +118,5 @@ public class Forklift extends Subsystems{
             setServoAngle(107);
             forkliftState = forkLiftState.UP;
         }
-    }
+    }*/
 }

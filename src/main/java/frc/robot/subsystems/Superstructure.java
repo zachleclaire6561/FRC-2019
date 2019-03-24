@@ -123,9 +123,9 @@ public class Superstructure extends Subsystems{
         forklift.setMotorSpeed(power);
     }
 
-    public void setForkliftServoPower(double pow){
+    /*public void setForkliftServoPower(double pow){
         forklift.setServoSpeed(pow);
-    }
+    }*/
 
     public void reverseIntake(){
         System.out.println("Reverse Intake is being called");
@@ -161,10 +161,10 @@ public class Superstructure extends Subsystems{
     public void Reset(){
         elevator.setHeight(ElevatorState.BOTTOM);
     }
-*/
+
     public void reverseForklift(){
         forklift.reverseForkliftAngle();
-    }
+    }*/
     
     public void runClimber(){
         climber.run();
@@ -197,6 +197,17 @@ public class Superstructure extends Subsystems{
 
     public void elevatorPow(double pow){
         elevator.setPower(pow);
+    }
+
+    public void reverseClimb(){
+        climber.reverse();
+    }
+
+    public void runClimb(){
+        climber.run();
+    }
+    public void climbOff(){
+        climber.setToZero();
     }
 /*
     public double getAngleOffset(){

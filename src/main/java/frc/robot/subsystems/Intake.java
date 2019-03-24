@@ -54,6 +54,7 @@ public class Intake extends Subsystems{
         Spark1 = new Spark(Constants.INTAKE_MTR_1);
         Spark2 = new Spark(Constants.INTAKE_MTR_2);
         pistonController = new DoubleSolenoid(Constants.DOUBLE_SOLENOID_1, Constants.DOUBLE_SOLENOID_2);
+        intakeState = IntakeState.IN;
     }
 
     public static Intake getInstance(){
@@ -102,11 +103,11 @@ public class Intake extends Subsystems{
     public void reverseIntakeState(){
         if(intakeState == IntakeState.IN){
             System.out.println("Intake is in");
-            setState(false);
+            setState(true);
         }
         else if(intakeState == IntakeState.OUT){
             System.out.println("Intake is out");
-            setState(true);
+            setState(false);
         }
 
     }
