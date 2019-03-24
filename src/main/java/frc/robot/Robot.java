@@ -55,7 +55,8 @@ public class Robot extends TimedRobot {
     driveTrainPeriodic();
     elevatorPeriodic();
     climberPeriodic();
-    intakePeriodic();
+    //intakePeriodic();
+    //Forklift and Intake controls are combined into forkliftPeriodic()
     forkliftPeriodic();
   }
 
@@ -133,7 +134,7 @@ public class Robot extends TimedRobot {
        superstruct.elevatorPow(-xbox.getLeftY());
     // }
   }
-
+  /*
   public void intakePeriodic(){
     if(xbox.getLeftTrigger() > 0.4){
      // System.out.println("Left trigger is activated");
@@ -145,7 +146,7 @@ public class Robot extends TimedRobot {
       superstruct.setForkliftRollers(0.0);
     }
   }
-
+  */
   public void forkliftPeriodic(){
     if(xbox.getRightTrigger() > 0.4){
       superstruct.setForkliftRollers(-0.6);
