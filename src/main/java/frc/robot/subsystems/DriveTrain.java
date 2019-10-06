@@ -73,7 +73,7 @@ public class DriveTrain extends Subsystems{
         victor1.setInverted(false);
 
         talon2  = TalonSRXFactory.createDefaultTalon(Constants.DRIVE_TRAIN_MTR_RIGHT_FRONT);
-        configureMaster(talon1, false);
+        configureMaster(talon2, false);
      
         victor2 = VictorSPXFactory.createPermanentSlaveVictor(Constants.DRIVE_TRAIN_MTR_RIGHT_BACK, Constants.DRIVE_TRAIN_MTR_RIGHT_FRONT);
         victor2.setInverted(true);

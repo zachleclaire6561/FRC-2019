@@ -71,6 +71,7 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
     driveTrainPeriodic();
+    intakePeriodic();
   }
 
   public void registerLooper(){
@@ -82,7 +83,9 @@ public class Robot extends TimedRobot {
   }
 
   public void driveTrainPeriodic(){
-    superstruct.tankDrive(-joysticks.getY1(), -joysticks.getY2());
+    superstruct.tankDrive(joysticks.getY2(), joysticks.getY1());
+    System.out.println(joysticks.getY1());
+    System.out.println(joysticks.getY2());
   }
 
   public void elevatorPeriodic(){
@@ -92,6 +95,9 @@ public class Robot extends TimedRobot {
   public void intakePeriodic(){
     if(xbox.getLeftTrigger() > 0.4){
       superstruct.setIntakeRollers(0.6);
+    }
+    else{
+      superstruct.setIntakeRollers(0);
     }
     if(xbox.getButtonBNewPress()){
       superstruct.reverseIntake();
