@@ -13,9 +13,12 @@ import frc.robot.loops.Looper;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 public class Robot extends TimedRobot {
-
+  private Compressor compressor = new Compressor();
+  private PowerDistributionPanel pdp = new PowerDistributionPanel();
   private Superstructure superstruct = Superstructure.getInstance();
   private DriveTrain driveBase = DriveTrain.getInstance();
   private Elevator elevator = Elevator.getInstance();
@@ -29,6 +32,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
+    compressor.clearAllPCMStickyFaults();
+    pdp.clearStickyFaults();
     AnalogInput.setGlobalSampleRate(62500);
     registerLooper();
   }
