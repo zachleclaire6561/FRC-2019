@@ -65,7 +65,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
-  
+    driveTrainPeriodic();
   }
 
   public void registerLooper(){
@@ -77,7 +77,7 @@ public class Robot extends TimedRobot {
   }
 
   public void driveTrainPeriodic(){
-    superstruct.tankDrive(joysticks.getY1(), joysticks.getY2());
+    superstruct.tankDrive(-joysticks.getY1(), -joysticks.getY2());
   }
 
   public void elevatorPeriodic(){
