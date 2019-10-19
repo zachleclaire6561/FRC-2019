@@ -13,8 +13,8 @@ public class Constants{
 
     //PWM Ports
     public static final int INTAKE_MTR_1   = 0; // 1 works too
-    public static final int INTAKE_MTR_2   = 1; // 2 doesn't work
-    public static final int FORKLIFT_MTR   = 2;
+    public static final int INTAKE_MTR_2   = 1; // 2, 0, 3, 4, 8 doesn't work
+    public static final int FORKLIFT_MTR   = 5; //WORKS!!!!! DO NOT CHANGE.
     public static final int FORKLIFT_SERVO = 3;
 
     //MXP Ports
@@ -33,9 +33,9 @@ public class Constants{
     public static final int DOUBLE_SOLENOID_2 = 1; 
 
     // USB Ports
-    public static final int XBOX_PORT = 0;
-    public static final int JOYSTICK_PORT_1 = 1;
-    public static final int JOYSTICK_PORT_2 = 2;
+    public static final int XBOX_PORT = 2;
+    public static final int JOYSTICK_PORT_1 = 0;
+    public static final int JOYSTICK_PORT_2 = 1;
 
     //Subsystem calibrated constants
     public static final int ELEVATOR_TICKS_TO_DISTANCE = 0;
@@ -49,17 +49,4 @@ public class Constants{
 
     public static final double ULTRASONIC_SENSOR_DISTANCE = 2; // calibrate
     // ^^ not even used...
-
-
-    /*
-      Heights for elevator
-    */ 
-  //DEPRECATED WITHOUT PID AND MEASUREMENT... SAVE FOR SEASON 2020 COMPETITIONS?
-    public static final double Elevator_Height_LVL1_DISK = 0;
-    public static final double Elevator_Height_LVL2_DISK = 0;
-    public static final double Elevator_Height_LVL3_DISK = 0;
-    public static final double Elevator_Height_LVL1_BALL = 0;
-    public static final double Elevator_Height_LVL2_BALL = 0;
-    public static final double Elevator_Height_LVL3_BALL = 0;
-  //READ ABOVE COMMENT!
 }

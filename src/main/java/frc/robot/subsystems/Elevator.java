@@ -100,6 +100,11 @@ public class Elevator extends Subsystems {
         return elevatorInstance;
     }
 
+    public void elevatorDrive(double speed1){
+        talon1.set(ControlMode.PercentOutput, speed1);
+        talon2.set(ControlMode.PercentOutput, speed1);
+    }
+
     @Override 
     public void zeroSensors(){
         height = 0;
@@ -132,14 +137,9 @@ public class Elevator extends Subsystems {
             elvState = ElevatorState.BRAKE;
     }
 
-    public synchronized void setHeight(double kHeight) {
-        goalHeight = kHeight;
-        pidHeightController.setSetPoint(goalHeight);
-    }
-
     public synchronized void resetHeight(){
         if(! lim1.get() && elvState != ElevatorState.BOTTOM){
-            setHeight(-0.5);
+            //setHeight(-0.5);
             elvState = ElevatorState.RESET;
         }
         else{

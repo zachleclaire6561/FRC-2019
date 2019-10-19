@@ -107,7 +107,7 @@ public class Superstructure extends Subsystems{
               driveBase.tankDrive(x1,x2);
     }
 
-    public void elevatorControl(int pos){
+    /*public void elevatorControl(int pos){
         // store heights as static constants in Constants.java 
         switch(pos){
             case 1:
@@ -147,7 +147,7 @@ public class Superstructure extends Subsystems{
             case 7:
                 setElevatorHeight(Constants.Elevator_Height_LVL3_BALL); // lvl 3 ball 
         }
-    }
+    }*/
 
     public boolean checkIntakeSafety(){
         return (intake.getState() == Intake.IntakeState.IN);
@@ -165,8 +165,12 @@ public class Superstructure extends Subsystems{
         forklift.setServoSpeed(pow);
     }
 
-    public void setElevatorHeight(double height){
-        elevator.setHeight(height);
+    /*public void setElevatorHeight(double height){
+        elevator.(height);
+    }*/
+
+    public void setElevatorSpeed(double speed){
+        elevator.elevatorDrive(speed);
     }
 
     public void resetElevator(){

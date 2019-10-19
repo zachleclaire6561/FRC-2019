@@ -1,7 +1,6 @@
 package frc.robot.loops;
 
 import frc.lib.util.*;
-import frc.robot.Constants;
 
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.Timer;

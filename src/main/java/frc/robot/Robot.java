@@ -89,22 +89,20 @@ public class Robot extends TimedRobot {
   }
 
   public void elevatorPeriodic(){ //work on this!!!
-    if(xbox.getLeftY() > 0.8) {
-      //superstruct.setElevator???
-      System.out.println("Going down! Val: " + xbox.getLeftY()); //testing
+    double elevatorSpeed = -1*xbox.getLeftY();
+    if(elevatorSpeed > 0.05 || elevatorSpeed < -0.05) {
+      superstruct.setElevatorSpeed(.6*elevatorSpeed);
+      System.out.println("Val: " + xbox.getLeftY()); //testing
+     System.out.println("An object at rest stays at rest, unless acted upon by some outside force. You are not powerful enough to be the outside force.");
     }
-    else if (xbox.getLeftY() < 0.2) {
-      //superstruct.setElevator???
-      System.out.println("Going up! Val: " + xbox.getLeftY()); //testing
-    }
-    else{
-      //superstruct.setElevator??? make it stop?
-    }
-  }
+  } 
 
   public void intakePeriodic(){
     if(xbox.getLeftTrigger() > 0.4){
       superstruct.setIntakeRollers(0.6);
+    }
+    else if(xbox.getRightTrigger() != 0){
+      superstruct.setIntakeRollers(-0.6);
     }
     else{
       superstruct.setIntakeRollers(0);
@@ -116,14 +114,17 @@ public class Robot extends TimedRobot {
 
   public void forkliftPeriodic(){
     if(xbox.getLeftTrigger() > 0.4){
+      superstruct.setForkliftRollers(-0.6);
+    }
+    else if(xbox.getRightTrigger() > 0.4){
       superstruct.setForkliftRollers(0.6);
     }
     else{
       superstruct.setForkliftRollers(0);
     }
-    if(xbox.getButtonBNewPress()){
+    /*if(xbox.getButtonBNewPress()){
       superstruct.reverseForklift();
-    }
+    }*/
   }
 
 }

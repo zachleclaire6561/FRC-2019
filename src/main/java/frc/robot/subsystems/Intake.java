@@ -90,7 +90,7 @@ public class Intake extends Subsystems{
     }
 
     public void setState(boolean state){
-        if(state){
+        if(state == true){
             pistonController.set(DoubleSolenoid.Value.kForward);
             intakeState = IntakeState.OUT;
         }else{
@@ -101,10 +101,10 @@ public class Intake extends Subsystems{
 
     public void reverseIntakeState(){
         if(intakeState == IntakeState.IN){
-            setState(false);
+            setState(true);
         }
         else{
-            setState(true);
+            setState(false);
         }
     }
 
