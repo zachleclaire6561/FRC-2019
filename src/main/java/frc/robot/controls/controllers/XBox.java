@@ -103,7 +103,7 @@ public class XBox{
     }
 
     public double getRightY(){
-        return xbox.getY(Hand.kLeft);
+        return xbox.getY(Hand.kRight);
     }
    
 }

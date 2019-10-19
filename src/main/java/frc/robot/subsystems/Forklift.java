@@ -4,15 +4,13 @@
 package frc.robot.subsystems;
 
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Spark;
-
 import frc.robot.loops.Looper;
 import frc.robot.loops.Loop;
 import frc.robot.Constants;
 
-public class Forklift extends Subsystems{
+public class Forklift extends Subsystems {
  
     // limit switch code
     private Spark sparky = new Spark(Constants.FORKLIFT_MTR);

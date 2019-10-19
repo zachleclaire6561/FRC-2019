@@ -23,14 +23,14 @@ public class Elevator extends Subsystems {
     private TalonSRX talon2;
     private LimitSwitch lim1 = new LimitSwitch(Constants.LIMIT_SWITCH_1);;
 
-    public double kP = 0;
+    public double kP = 1.0; //Need to re-write... PID variables not set.
     public double kI = 0;
     public double kD = 0;
 
-    public double tolerance = 1; 
+    public double tolerance = 1;  //sensitivity constant for controlls
 
     private PID pidHeightController = new PID(kP, kI, kD);
-    private ElevatorState elvState = ElevatorState.RESET;
+    private ElevatorState elvState = ElevatorState.RESET; 
 
 
     // limit switch
@@ -59,18 +59,18 @@ public class Elevator extends Subsystems {
             }
         }
 
-    };
+    }; //ALL CODE FROM LINE 38 TO HERE IS IRRELEVANT
 
     public enum ElevatorState{
-      BRAKE, 
-      MOVING, 
-      RESET, 
-      BOTTOM
+      BRAKE, //stopped
+      MOVING, //moving
+      RESET, //moving back to bottom
+      BOTTOM //grounded at bottom--default
     }
 
     private static Elevator elevatorInstance = null;
 
-    private void configureMaster(TalonSRX talon) {
+    private void configureMaster(TalonSRX talon) { //talon factory
         talon.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 5, 100);
         final ErrorCode sensorPresent = talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100); 
         if (sensorPresent != ErrorCode.OK) {

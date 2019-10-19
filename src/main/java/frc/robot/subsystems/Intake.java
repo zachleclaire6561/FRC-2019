@@ -3,20 +3,20 @@ package frc.robot.subsystems;
 import frc.robot.Constants;
 import frc.robot.loops.Looper;
 import frc.robot.loops.Loop;
-import frc.lib.math.PID;
+//import frc.lib.math.PID;
 
-import  edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Spark;
 
 public class Intake extends Subsystems{
 
-    private DoubleSolenoid pistonController;
+    public DoubleSolenoid pistonController;
     private Spark Spark1;
     private Spark Spark2;
 
-    double kP = 1.0;
+/*    double kP = 1.0;
     double kI = 0.0;
-    double kD = 0.0;
+    double kD = 0.0;*/
     
     public IntakeState intakeState;
 
@@ -25,7 +25,7 @@ public class Intake extends Subsystems{
         IN
     }
 
-    private static Intake intakeInstance= null;
+    private static Intake intakeInstance = null;
 
     public Loop loop = new Loop(){
         @Override 

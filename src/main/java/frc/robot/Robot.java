@@ -88,8 +88,18 @@ public class Robot extends TimedRobot {
     System.out.println(joysticks.getY2());
   }
 
-  public void elevatorPeriodic(){
-    
+  public void elevatorPeriodic(){ //work on this!!!
+    if(xbox.getLeftY() > 0.8) {
+      //superstruct.setElevator???
+      System.out.println("Going down! Val: " + xbox.getLeftY()); //testing
+    }
+    else if (xbox.getLeftY() < 0.2) {
+      //superstruct.setElevator???
+      System.out.println("Going up! Val: " + xbox.getLeftY()); //testing
+    }
+    else{
+      //superstruct.setElevator??? make it stop?
+    }
   }
 
   public void intakePeriodic(){
@@ -105,10 +115,13 @@ public class Robot extends TimedRobot {
   }
 
   public void forkliftPeriodic(){
-    if(xbox.getRightTrigger() > 0.4){
+    if(xbox.getLeftTrigger() > 0.4){
       superstruct.setForkliftRollers(0.6);
     }
-    if(xbox.getButtonANewPress()){
+    else{
+      superstruct.setForkliftRollers(0);
+    }
+    if(xbox.getButtonBNewPress()){
       superstruct.reverseForklift();
     }
   }
